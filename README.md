@@ -1,5 +1,5 @@
-# BKDEatery
-Project for CSS325 Database System
+# EATERIO
+Project for CSS325/326 Database System
 
 ## Project Status
 Status: ONGOING

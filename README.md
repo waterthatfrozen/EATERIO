@@ -1,11 +1,11 @@
 # EATERIO
-Project for CSS325/326 Database System
+Database System Project
 
 ## Project Status
 Status: ONGOING
 Updated on: August 24th, 2021
 
 ## Members
-Paphana Yiwsiw 
+Paphana Yiwsiw
 Sirada Chaisawat
 Thanakit Lerttomolsakul

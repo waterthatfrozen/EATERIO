@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2021 at 04:05 PM
+-- Generation Time: Oct 12, 2021 at 05:51 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -24,20 +24,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `ct_id` int(11) NOT NULL,
+  `c_id` int(11) NOT NULL,
+  `s_id` int(11) NOT NULL,
+  `f_id` int(11) NOT NULL,
+  `ct_amount` int(11) NOT NULL,
+  `ct_note` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
   `c_id` int(11) NOT NULL,
-  `c_username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `c_pwd` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `c_firstname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `c_lastname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `c_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `c_phoneno` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `c_gender` varchar(1) COLLATE utf8_unicode_ci NOT NULL COMMENT 'M for Male, F for Female',
-  `c_type` varchar(3) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of customer in this canteen (STD for student, INS for instructor, STF for staff, GUE for guest, ADM for admin, OTH for other)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `c_username` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_pwd` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_firstname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_lastname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_phoneno` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `c_gender` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'M for Male, F for Female',
+  `c_type` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Type of customer in this canteen (STD for student, INS for instructor, STF for staff, GUE for guest, ADM for admin, OTH for other)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customer`
@@ -59,18 +74,19 @@ INSERT INTO `customer` (`c_id`, `c_username`, `c_pwd`, `c_firstname`, `c_lastnam
 CREATE TABLE `food` (
   `f_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
-  `f_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `f_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `f_price` decimal(6,2) NOT NULL,
-  `f_available` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Food is available to order or not',
-  `f_pic` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `f_todayavail` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Food is available to order or not',
+  `f_preorderavail` tinyint(4) NOT NULL DEFAULT 1,
+  `f_pic` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `food`
 --
 
-INSERT INTO `food` (`f_id`, `s_id`, `f_name`, `f_price`, `f_available`, `f_pic`) VALUES
-(1, 1, 'ข้าวกะเพราหมูสับ', '40.00', 1, NULL);
+INSERT INTO `food` (`f_id`, `s_id`, `f_name`, `f_price`, `f_todayavail`, `f_preorderavail`, `f_pic`) VALUES
+(1, 1, 'ข้าวกะเพราหมูสับ', '40.00', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,8 +100,8 @@ CREATE TABLE `order_detail` (
   `f_id` int(11) NOT NULL,
   `ord_amount` int(11) NOT NULL,
   `ord_buyprice` decimal(6,2) NOT NULL COMMENT 'To keep the snapshot of selected menu cost at the time of the purchase.',
-  `ord_note` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ord_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `order_detail`
@@ -104,20 +120,33 @@ CREATE TABLE `order_header` (
   `orh_id` int(11) NOT NULL,
   `c_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
   `orh_ordertime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `orh_pickuptime` datetime NOT NULL,
-  `orh_paymenttype` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `orh_paymentstatus` tinyint(4) NOT NULL,
-  `orh_orderstatus` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `orh_orderstatus` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `orh_finishedtime` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `order_header`
 --
 
-INSERT INTO `order_header` (`orh_id`, `c_id`, `s_id`, `orh_ordertime`, `orh_pickuptime`, `orh_paymenttype`, `orh_paymentstatus`, `orh_orderstatus`, `orh_finishedtime`) VALUES
-(2, 1, 1, '2021-09-21 13:59:34', '2021-09-21 21:00:00', 'PP', 1, 'RECEIVED', NULL);
+INSERT INTO `order_header` (`orh_id`, `c_id`, `s_id`, `p_id`, `orh_ordertime`, `orh_pickuptime`, `orh_orderstatus`, `orh_finishedtime`) VALUES
+(2, 1, 1, 0, '2021-09-21 13:59:34', '2021-09-21 21:00:00', 'RECEIVED', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `p_id` int(11) NOT NULL,
+  `c_id` int(11) NOT NULL,
+  `p_type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `p_amount` tinyint(4) NOT NULL,
+  `p_detail` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -127,16 +156,16 @@ INSERT INTO `order_header` (`orh_id`, `c_id`, `s_id`, `orh_ordertime`, `orh_pick
 
 CREATE TABLE `shop` (
   `s_id` int(11) NOT NULL,
-  `s_username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `s_pwd` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `s_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `s_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `s_username` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_pwd` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `s_openhour` time NOT NULL,
   `s_closehour` time NOT NULL,
   `s_available` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Shop ready for taking an order or not (True for open, False for close)',
-  `s_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `s_phoneno` varchar(45) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `s_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_phoneno` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `shop`
@@ -148,6 +177,15 @@ INSERT INTO `shop` (`s_id`, `s_username`, `s_pwd`, `s_name`, `s_location`, `s_op
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`ct_id`),
+  ADD KEY `fk_ct_c_idx` (`c_id`),
+  ADD KEY `fk_ct_s_idx` (`s_id`),
+  ADD KEY `fk_ct_f_idx` (`f_id`);
 
 --
 -- Indexes for table `customer`
@@ -176,7 +214,15 @@ ALTER TABLE `order_detail`
 ALTER TABLE `order_header`
   ADD PRIMARY KEY (`orh_id`),
   ADD KEY `fk_orh_idx` (`c_id`),
-  ADD KEY `fk_s_orh_idx` (`s_id`);
+  ADD KEY `fk_s_orh_idx` (`s_id`),
+  ADD KEY `fk_p_orh_idx` (`p_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`p_id`),
+  ADD KEY `p_c_fk_idx` (`c_id`);
 
 --
 -- Indexes for table `shop`
@@ -187,6 +233,12 @@ ALTER TABLE `shop`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -213,6 +265,12 @@ ALTER TABLE `order_header`
   MODIFY `orh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `shop`
 --
 ALTER TABLE `shop`
@@ -221,6 +279,14 @@ ALTER TABLE `shop`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_ct_c` FOREIGN KEY (`c_id`) REFERENCES `customer` (`c_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ct_f` FOREIGN KEY (`f_id`) REFERENCES `food` (`f_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ct_s` FOREIGN KEY (`s_id`) REFERENCES `shop` (`s_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `food`
@@ -240,7 +306,14 @@ ALTER TABLE `order_detail`
 --
 ALTER TABLE `order_header`
   ADD CONSTRAINT `fk_c_orh` FOREIGN KEY (`c_id`) REFERENCES `customer` (`c_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_p_orh` FOREIGN KEY (`p_id`) REFERENCES `payment` (`p_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_s_orh` FOREIGN KEY (`s_id`) REFERENCES `shop` (`s_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `fk_p_c` FOREIGN KEY (`c_id`) REFERENCES `customer` (`c_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

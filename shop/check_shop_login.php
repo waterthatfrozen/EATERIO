@@ -14,6 +14,7 @@
         $row = $result -> fetch_array();
         $_SESSION["username"] = $username;
         $_SESSION["shopname"] = $row["s_name"];
+        $_SESSION["utype"] = "shopowner";
         ?>
         <script>
             alert("Welcome to EATERIO");

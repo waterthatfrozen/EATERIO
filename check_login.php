@@ -15,6 +15,7 @@
         $_SESSION["username"] = $username;
         $_SESSION["firstname"] = $row["c_firstname"];
         $_SESSION["lastname"] = $row["c_lastname"];
+        $_SESSION["utype"] = "customer";
         ?>
         <script>
             alert("Welcome to EATERIO");

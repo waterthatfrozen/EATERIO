@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include("conn_db.php"); ?>
+    <?php session_start(); include("conn_db.php"); include('head.php');?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Poppins:ital,wght@0,200;0,400;0,600;1,200;1,600&display=swap" rel="stylesheet">    <title>Eaterio</title>
-    <style>
-        body{
-            font-family: 'Poppins', sans-serif;
-            margin: 50px;
-        }
-    </style>
+    <link href="css/login.css" rel="stylesheet">
+    <title>EATERIO | CUSTOMER LOGIN</title>
 </head>
-<body>
-    <h1>CUSTOMER LOGIN</h1>
-    <div id="login-box">
-        <form method="POST" action="check_login.php">
-            <label>Username</label>
-            <input type="text" name="username" placeholder="username">
-            <br/>
-            <br/>
-            <label>Password</label>
-            <input type="password" name="pwd" placeholder="password">
-            <br/>
-            <br/>
-            <input type="submit" name="submit" value="Log In">
+<body class="text-center">
+    <div class="form-signin">
+        <form method="POST" action="check_login.php" class="form-floating">
+            <img class="mb-4" src="img/logo-with-text.png" alt="" width="258" height="88">
+            <h1 class="h3 mb-3 fw-normal text-bold">Sign In</h1>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
         </form>
     </div>
 </body>

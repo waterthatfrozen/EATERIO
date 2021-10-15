@@ -1,36 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <?php include("conn_db.php"); ?>
+    <?php session_start(); include("../conn_db.php"); include('../head.php');?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Poppins:ital,wght@0,200;0,400;0,600;1,200;1,600&display=swap" rel="stylesheet">    <title>Eaterio</title>
-    <style>
-        body{
-            font-family: 'Poppins', sans-serif;
-            margin: 50px;
-        }
-    </style>
+    <link href="../css/login.css" rel="stylesheet">
+
+    <title>SHOP LOG IN | EATERIO</title>
 </head>
-<body>
-    <h1>SHOP LOGIN</h1>
-    <div id="login-box">
-        <form method="POST" action="check_shop_login.php">
-            <label>Username</label>
-            <input type="text" name="username" placeholder="username">
-            <br/>
-            <br/>
-            <label>Password</label>
-            <input type="password" name="pwd" placeholder="password">
-            <br/>
-            <br/>
-            <input type="submit" name="submit" value="Log In">
+
+<body class="d-flex flex-column h-100">
+    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
+        <div class="container-fluid mx-4">
+            <a href="index.php">
+                <img src="../img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse">
+                <div class="d-flex text-end"></div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container form-signin">
+        <a class="nav nav-item text-decoration-none text-muted" href="#" onclick="history.back();">
+            <i class="bi bi-arrow-left-square me-2"></i>Go back 
+        </a>
+        <form method="POST" action="check_shop_login.php" class="form-floating">
+            <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-door-open me-2"></i>Shop Log In</h2>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-success mb-3" type="submit">Log In</button>
+            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="#">
+                <i class="bi bi-key me-2"></i>Forgot your password?
+            </a>
+            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="#">
+                <i class="bi bi-person-plus me-2"></i>Create your new account
+            </a>
         </form>
     </div>
+
+    <footer
+        class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-auto bg-secondary text-light">
+        <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada C.
+                Thanakit L.</span></span>
+        <ul class="nav justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-light" target="_blank" href="https://github.com/waterthatfrozen/EATERIO"><i
+                        class="bi bi-github"></i></a></li>
+        </ul>
+    </footer>
 </body>
+
 </html>

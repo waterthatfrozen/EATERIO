@@ -10,7 +10,7 @@
     <title>EATERIO</title>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
     <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
         <div class="container-fluid mx-4">
             <a href="index.php">
@@ -35,10 +35,10 @@
                 </ul>
                 <div class="d-flex text-end">
                     <?php if(!isset($_SESSION['username'])){ ?>
-                    <a class="btn btn-outline-secondary me-2" href="#">Sign Up</a>
+                    <a class="btn btn-outline-secondary me-2" href="cust_regist.php">Sign Up</a>
                     <a class="btn btn-success" href="cust_login.php">Log In</a>
                     <?php }else{ ?>
-                    <span class='me-2'> LOGGED IN! Welcome, <?=$_SESSION['username']?></span>
+                    <span class="m-2 me-3"> LOGGED IN! Welcome, <?=$_SESSION['username']?></span>
                     <a class="btn btn-outline-danger" href="logout.php">Log Out</a>
                     <?php } ?>
                 </div>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="container py-5" id="recommended-shop">
+    <div class="container p-5" id="recommended-shop">
         <h2 class="border-bottom pb-2"><i class="bi bi-shop align-top"></i> Recommended For You</h2>
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-3">
             <div class="col">

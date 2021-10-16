@@ -49,7 +49,6 @@ CREATE TABLE `customer` (
   `c_firstname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `c_lastname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `c_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `c_phoneno` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `c_gender` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'M for Male, F for Female',
   `c_type` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Type of customer in this canteen (STD for student, INS for instructor, STF for staff, GUE for guest, ADM for admin, OTH for other)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -58,12 +57,12 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`c_id`, `c_username`, `c_pwd`, `c_firstname`, `c_lastname`, `c_email`, `c_phoneno`, `c_gender`, `c_type`) VALUES
-(1, '6222780379', '6222780379', 'Paphana', 'Yiwsiw', '6222780379@g.siit.tu.ac.th', '0840631422', 'M', 'STD'),
-(2, '6222780668', '6222780668', 'Sirada', 'Chaisawat', '6222780668@g.siit.tu.ac.th', '0884984730', 'F', 'STD'),
-(3, '6222780569', '6222780569', 'Thanakit', 'Lerttomolsakul', '6222780569@g.siit.tu.ac.th', '0864115780', 'M', 'STD'),
-(4, 'BKD_Admin01', '12345678', 'Paphana', 'Yiwsiw', 'admin_dummy@email.com', '0800000000', 'M', 'ADM'),
-(5, 'thanaruk.thee', 'thanaruk', 'Thanaruk', 'Theeramunkong', 'thanaruk@siit.tu.ac.th', '0800000001', 'M', 'INS');
+INSERT INTO `customer` (`c_id`, `c_username`, `c_pwd`, `c_firstname`, `c_lastname`, `c_email`, `c_gender`, `c_type`) VALUES
+(1, '6222780379', '6222780379', 'Paphana', 'Yiwsiw', '6222780379@g.siit.tu.ac.th', 'M', 'STD'),
+(2, '6222780668', '6222780668', 'Sirada', 'Chaisawat', '6222780668@g.siit.tu.ac.th', 'F', 'STD'),
+(3, '6222780569', '6222780569', 'Thanakit', 'Lerttomolsakul', '6222780569@g.siit.tu.ac.th', 'M', 'STD'),
+(4, 'BKD_Admin01', '12345678', 'Paphana', 'Yiwsiw', 'admin_dummy@email.com', 'M', 'ADM'),
+(5, 'thanaruk.thee', 'thanaruk', 'Thanaruk', 'Theeramunkong', 'thanaruk@siit.tu.ac.th', 'M', 'INS');
 
 -- --------------------------------------------------------
 

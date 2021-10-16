@@ -18,14 +18,14 @@
         $_SESSION["utype"] = "customer";
         ?>
         <script>
-            alert("Welcome to EATERIO");
+            //alert("Welcome to EATERIO");
             window.location = "index.php";
         </script>
         <?php
     }else{
         ?>
         <script>
-            alert("Wrong username and/or password!");
+            alert("You entered wrong username and/or password!");
             history.back();
         </script>
         <?php

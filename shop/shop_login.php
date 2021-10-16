@@ -34,11 +34,11 @@
         </a>
         <form method="POST" action="check_shop_login.php" class="form-floating">
             <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-door-open me-2"></i>Shop Log In</h2>
-            <div class="form-floating">
+            <div class="form-floating mb-2">
                 <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
                 <label for="floatingInput">Username</label>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-2">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
                 <label for="floatingPassword">Password</label>
             </div>

@@ -16,6 +16,10 @@ body {
   margin: auto;
 }
 
+.reg-success,.reg-fail{
+  max-width: 400px !important;
+}
+
 .form-signin .checkbox {
   font-weight: 400;
 }
@@ -38,4 +42,16 @@ body {
 
 .xsmall-font {
   font-size: x-small;
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.reg-text{
+  font-weight: 400;
+}
+
+.rounded-25{
+  border-radius: 25px;
 }

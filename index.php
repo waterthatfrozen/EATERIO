@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Say hi to bright -->
 <head>
     <?php session_start(); include("conn_db.php"); include('head.php');?>
     <meta charset="UTF-8">

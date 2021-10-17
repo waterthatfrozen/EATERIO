@@ -2,13 +2,21 @@
 <html lang="en">
 
 <head>
-    <?php session_start(); include("conn_db.php"); include('head.php');?>
+    <?php 
+        session_start(); include("conn_db.php"); include('head.php');
+        $cust_un = $_POST["fp_username"];
+        $cust_em = $_POST["fp_email"];
+        $query = "SELECT c_username FROM customer WHERE c_username = '$cust_un' AND c_email = '$cust_em' LIMIT 0,1";
+        $result = $mysqli -> query($query);
+        if ($result->num_rows >= 1){
+            echo 'FOUND USER!';
+        }
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/login.css" rel="stylesheet">
-
-    <title>LOG IN | EATERIO</title>
+    <title>RESET PASSWORD | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -22,6 +30,9 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse">
+                <div class="d-flex text-end"></div>
+            </div>
         </div>
     </header>
 
@@ -29,26 +40,18 @@
         <a class="nav nav-item text-decoration-none text-muted" href="#" onclick="history.back();">
             <i class="bi bi-arrow-left-square me-2"></i>Go back 
         </a>
-        <form method="POST" action="check_login.php" class="form-floating">
-            <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-door-open me-2"></i>Log In</h2>
+        <form method="POST" action="#" class="form-floating">
+            <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-key me-2"></i>Reset Password</h2>
+            <p class="mt-4 mb-3 fw-normal">Enter your information below.</p>
             <div class="form-floating mb-2">
-                <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username" required>
-                <label for="floatingInput">Username</label>
+                <input type="password" class="form-control" id="rst_pwd" placeholder="New Password" name="new_pwd" required>
+                <label for="fp_username">Username</label>
             </div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd" required>
-                <label for="floatingPassword">Password</label>
+                <input type="password" class="form-control" id="rst_pwd" placeholder="Email" name="email" required>
+                <label for="fp_email">Email</label>
             </div>
-            <button class="w-100 btn btn-success mb-3" type="submit">Log In</button>
-            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="shop/shop_login.php">
-                <i class="bi bi-shop me-2"></i>Log in to your shop account
-            </a>
-            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="cust_forgot_pwd.php">
-                <i class="bi bi-key me-2"></i>Forgot your password?
-            </a>
-            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="cust_regist.php">
-                <i class="bi bi-person-plus me-2"></i>Create your new account
-            </a>
+            <button class="w-100 btn btn-success mb-3" type="submit">Next</button>
         </form>
     </div>
 

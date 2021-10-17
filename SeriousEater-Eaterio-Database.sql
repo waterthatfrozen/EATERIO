@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 05:51 AM
+-- Generation Time: Oct 17, 2021 at 06:58 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -62,7 +62,9 @@ INSERT INTO `customer` (`c_id`, `c_username`, `c_pwd`, `c_firstname`, `c_lastnam
 (2, '6222780668', '6222780668', 'Sirada', 'Chaisawat', '6222780668@g.siit.tu.ac.th', 'F', 'STD'),
 (3, '6222780569', '6222780569', 'Thanakit', 'Lerttomolsakul', '6222780569@g.siit.tu.ac.th', 'M', 'STD'),
 (4, 'BKD_Admin01', '12345678', 'Paphana', 'Yiwsiw', 'admin_dummy@email.com', 'M', 'ADM'),
-(5, 'thanaruk.thee', 'thanaruk', 'Thanaruk', 'Theeramunkong', 'thanaruk@siit.tu.ac.th', 'M', 'INS');
+(5, 'thanaruk.thee', 'thanaruk', 'Thanaruk', 'Theeramunkong', 'thanaruk@siit.tu.ac.th', 'M', 'INS'),
+(11, 'someone', 'someonee', 'someone', 'someone', 'someone@email.com', 'N', 'GUE'),
+(12, 'tester', 'testtest', 'PY', 'PY', 'test@gmail.com', 'M', 'STD');
 
 -- --------------------------------------------------------
 
@@ -102,13 +104,6 @@ CREATE TABLE `order_detail` (
   `ord_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `order_detail`
---
-
-INSERT INTO `order_detail` (`ord_id`, `orh_id`, `f_id`, `ord_amount`, `ord_buyprice`, `ord_note`) VALUES
-(4, 2, 1, 1, '40.00', 'ไม่ใส่ใบกะเพรา');
-
 -- --------------------------------------------------------
 
 --
@@ -125,13 +120,6 @@ CREATE TABLE `order_header` (
   `orh_orderstatus` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `orh_finishedtime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_header`
---
-
-INSERT INTO `order_header` (`orh_id`, `c_id`, `s_id`, `p_id`, `orh_ordertime`, `orh_pickuptime`, `orh_orderstatus`, `orh_finishedtime`) VALUES
-(2, 1, 1, 0, '2021-09-21 13:59:34', '2021-09-21 21:00:00', 'RECEIVED', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +178,9 @@ ALTER TABLE `cart`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`c_id`);
+  ADD PRIMARY KEY (`c_id`),
+  ADD UNIQUE KEY `c_username` (`c_username`),
+  ADD UNIQUE KEY `c_email` (`c_email`);
 
 --
 -- Indexes for table `food`
@@ -243,7 +233,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `food`

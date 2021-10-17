@@ -12,45 +12,44 @@
                 $query = "UPDATE customer SET c_pwd = '$newpwd' WHERE c_id=$cust_id";
                 $result = $mysqli -> query($query);
                 if($result) {
-                    ?>
-    <script>
-        alert("Successfully reset your password.");
-        window.location = "index.php";
-    </script>
-    <?php
+                ?>
+                    <script>
+                        window.location = "cust_reset_success.php";
+                    </script>
+                <?php
                 }else{
-                    ?>
-    <script>
-        alert("Failed to reset your password.");
-        history.back();
-    </script>
-    <?php
+                ?>
+                    <script>
+                        window.location = "cust_regist_fail.php?err=<?php echo $mysqli -> errno;?>";
+                    </script>
+                <?php
                 }
             }else{
-                ?>
-    <script>
-        alert("Your new password is not match. \nPlease enter it again.");
-        history.back();
-    </script>
-    <?php
+            ?>
+                <script>
+                    alert("Your new password is not match. \nPlease enter it again.");
+                    history.back();
+                </script>
+            <?php
             }
-        }
-        else{
+        }else{
         $cust_un = $_POST["fp_username"];
         $cust_em = $_POST["fp_email"];
-        $query = "SELECT c_id FROM customer WHERE c_username = '$cust_un' AND c_email = '$cust_em' LIMIT 0,1";
+        $query = "SELECT c_firstname,c_lastname,c_id FROM customer WHERE c_username = '$cust_un' AND c_email = '$cust_em' LIMIT 0,1";
         $result = $mysqli -> query($query);
         if ($result->num_rows == 0){
-            ?>
-    <script>
-        alert("There is no account associated with this username and password");
-        history.back();
-    </script>
-    <?php
+        ?>
+            <script>
+                alert("There is no account associated with this username and password");
+                history.back();
+            </script>
+        <?php
             exit(1);
         }else{
             $row = $result -> fetch_array();
             $cust_id = $row["c_id"];
+            $cust_fn = $row["c_firstname"];
+            $cust_ln = $row["c_lastname"];
         }
     }
     ?>
@@ -84,7 +83,8 @@
         </a>
         <form method="POST" action="cust_reset_pwd.php" class="form-floating">
             <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-key me-2"></i>Reset Password</h2>
-            <p class="mt-4 mb-3 fw-normal">Enter your information below.</p>
+            <p class="mt-4 fw-normal">Enter your information below.<br/>
+            This is an account of <?php echo $cust_fn." ".$cust_ln;?></p>
             <div class="form-floating mb-2">
                 <input type="password" class="form-control" id="rst_pwd" minlength="8" maxlength="45" placeholder="New Password" name="new_pwd"
                     required>

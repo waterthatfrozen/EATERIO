@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Bright is here -->
 <!-- Say hi to bright -->
 <head>
     <?php session_start(); include("conn_db.php"); include('head.php');?>

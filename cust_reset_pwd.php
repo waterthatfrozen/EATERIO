@@ -4,13 +4,55 @@
 <head>
     <?php 
         session_start(); include("conn_db.php"); include('head.php');
+        if(isset($_POST["rst_confirm"])){
+            $cust_id = $_POST['cust_id'];
+            $newpwd = $_POST['new_pwd'];
+            $newcfpwd = $_POST['new_cfpwd'];
+            if($newpwd==$newcfpwd){
+                $query = "UPDATE customer SET c_pwd = '$newpwd' WHERE c_id=$cust_id";
+                $result = $mysqli -> query($query);
+                if($result) {
+                    ?>
+    <script>
+        alert("Successfully reset your password.");
+        window.location = "index.php";
+    </script>
+    <?php
+                }else{
+                    ?>
+    <script>
+        alert("Failed to reset your password.");
+        history.back();
+    </script>
+    <?php
+                }
+            }else{
+                ?>
+    <script>
+        alert("Your new password is not match. \nPlease enter it again.");
+        history.back();
+    </script>
+    <?php
+            }
+        }
+        else{
         $cust_un = $_POST["fp_username"];
         $cust_em = $_POST["fp_email"];
-        $query = "SELECT c_username FROM customer WHERE c_username = '$cust_un' AND c_email = '$cust_em' LIMIT 0,1";
+        $query = "SELECT c_id FROM customer WHERE c_username = '$cust_un' AND c_email = '$cust_em' LIMIT 0,1";
         $result = $mysqli -> query($query);
-        if ($result->num_rows >= 1){
-            echo 'FOUND USER!';
+        if ($result->num_rows == 0){
+            ?>
+    <script>
+        alert("There is no account associated with this username and password");
+        history.back();
+    </script>
+    <?php
+            exit(1);
+        }else{
+            $row = $result -> fetch_array();
+            $cust_id = $row["c_id"];
         }
+    }
     ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,20 +80,23 @@
 
     <div class="container form-signin mt-auto">
         <a class="nav nav-item text-decoration-none text-muted" href="#" onclick="history.back();">
-            <i class="bi bi-arrow-left-square me-2"></i>Go back 
+            <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
-        <form method="POST" action="#" class="form-floating">
+        <form method="POST" action="cust_reset_pwd.php" class="form-floating">
             <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-key me-2"></i>Reset Password</h2>
             <p class="mt-4 mb-3 fw-normal">Enter your information below.</p>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control" id="rst_pwd" placeholder="New Password" name="new_pwd" required>
-                <label for="fp_username">Username</label>
+                <input type="password" class="form-control" id="rst_pwd" minlength="8" maxlength="45" placeholder="New Password" name="new_pwd"
+                    required>
+                <label for="fp_username">New Password</label>
             </div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control" id="rst_pwd" placeholder="Email" name="email" required>
-                <label for="fp_email">Email</label>
+                <input type="password" class="form-control" id="rst_pwd" minlength="8" maxlength="45" placeholder="Confirm New Password"
+                    name="new_cfpwd" required>
+                <label for="fp_email">Confirm New Password</label>
             </div>
-            <button class="w-100 btn btn-success mb-3" type="submit">Next</button>
+            <input type="hidden" name="cust_id" value="<?=$cust_id?>">
+            <button class="w-100 btn btn-success mb-3" name="rst_confirm" type="submit">Reset Password</button>
         </form>
     </div>
 

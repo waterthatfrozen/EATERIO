@@ -30,16 +30,12 @@
     <div class="mt-5"></div>
     <div class="container form-signin text-center reg-fail mt-auto">
             <i class="mt-4 bi bi-exclamation-circle text-danger h1 display-2"></i>
-            <h3 class="mt-2 mb-3 fw-normal text-bold">Unable to register</h3>
+            <h3 class="mt-2 mb-3 fw-normal text-bold">Unable to reset your password</h3>
             <p class="mb-3 fw-normal text-bold">Sorry, we have encountered with the error.<br/>
                 <code>
                     <?php
                         $error_code = $_GET["err"];
-                        if ($error_code == 1062){
-                            echo "There is an account with same username or email";
-                        }else{
-                            echo "Error Code: {$error_code}";
-                        }
+                        echo "Error Code: {$error_code}";
                     ?>
                 </code>
             </p>

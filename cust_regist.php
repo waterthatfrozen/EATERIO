@@ -48,6 +48,9 @@
                 <input type="password" class="form-control" id="cfpwd" placeholder="Confirm Password" minlength="8"
                     maxlength="45" name="cfpwd" required>
                 <label for="cfpwd">Confirm Password</label>
+                <div id="passwordHelpBlock" class="form-text smaller-font">
+                    Your password must be at least 8 characters long.
+                </div>
             </div>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control" id="firstname" placeholder="First Name" name="firstname"

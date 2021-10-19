@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2021 at 06:58 PM
+-- Generation Time: Oct 19, 2021 at 05:32 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -149,7 +149,8 @@ CREATE TABLE `shop` (
   `s_location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `s_openhour` time NOT NULL,
   `s_closehour` time NOT NULL,
-  `s_available` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Shop ready for taking an order or not (True for open, False for close)',
+  `s_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Shop ready for taking an order or not (True for open, False for close)',
+  `s_preorderStatus` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Shop is ready for tomorrow pre-order or not',
   `s_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `s_phoneno` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -158,8 +159,8 @@ CREATE TABLE `shop` (
 -- Dumping data for table `shop`
 --
 
-INSERT INTO `shop` (`s_id`, `s_username`, `s_pwd`, `s_name`, `s_location`, `s_openhour`, `s_closehour`, `s_available`, `s_email`, `s_phoneno`) VALUES
-(1, 'shop001', '12345678', 'ร้านอาหารตามสั่ง', 'โรงอาหารล็อกที่ 2', '08:00:00', '14:30:00', 1, 'shop001@email.com', '0900000001');
+INSERT INTO `shop` (`s_id`, `s_username`, `s_pwd`, `s_name`, `s_location`, `s_openhour`, `s_closehour`, `s_status`, `s_preorderStatus`, `s_email`, `s_phoneno`) VALUES
+(1, 'shop001', '12345678', 'ร้านอาหารตามสั่ง', 'โรงอาหารล็อกที่ 2', '08:00:00', '14:30:00', 1, 1, 'shop001@email.com', '0900000001');
 
 --
 -- Indexes for dumped tables

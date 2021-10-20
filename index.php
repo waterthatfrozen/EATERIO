@@ -14,7 +14,7 @@
     <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
         <div class="container-fluid mx-4">
             <a href="index.php">
-                <img src="img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
+                <img src="img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
             </a>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
@@ -30,7 +30,7 @@
                         <a href="shop_list.php" class="nav-link px-3 text-dark">Shop List</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link px-3 text-dark">Order History</a>
+                        <a href="cust_order_history.php" class="nav-link px-3 text-dark">Order History</a>
                     </li>
                 </ul>
                 <div class="d-flex text-end">
@@ -47,7 +47,7 @@
     </header>
     <div class="position-relative d-flex overflow-hidden text-center text-white promo-banner-bg py-3">
         <div class="p-lg-2 mx-auto my-5">
-            <h1 class="display fw-normal">Welcome to EATERIO</h1>
+            <h1 class="display-5 fw-normal">Welcome to EATERIO</h1>
             <p class="lead fw-normal">Food ordering system of SIIT Bangkradi Campus Canteen <span
                     class="badge rounded-pill bg-warning reg-text text-dark">Under Construction</span></p>
             <div name="search-box" class="d-flex justify-content-center">
@@ -74,7 +74,7 @@
             <div class="col">
                 <a href="#" class="text-decoration-none text-dark">
                     <div class="card rounded-25">
-                        <img src="img/noodle.jpg" class="card-img-top rounded-25" alt="...">
+                        <img src="img/noodle.jpg" style="width:100%; height:175px; object-fit:cover;" class="card-img-top rounded-25 img-fluid" alt="...">
                         <div class="card-body">
                             <h4 name="shop-name" class="card-title">Noodle Shop</h4>
                             <p class="card-subtitle">

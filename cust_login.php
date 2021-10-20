@@ -5,7 +5,6 @@
     <?php session_start(); include("conn_db.php"); include('head.php');?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/login.css" rel="stylesheet">
 
     <title>LOG IN | EATERIO</title>

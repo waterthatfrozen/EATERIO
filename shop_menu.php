@@ -31,7 +31,7 @@
                         <a href="shop_list.php" class="nav-link px-3 text-dark">Shop List</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link px-3 text-dark">Order History</a>
+                        <a href="cust_order_history.php" class="nav-link px-3 text-dark">Order History</a>
                     </li>
                 </ul>
                 <div class="d-flex text-end">
@@ -67,7 +67,7 @@
                 </li>
                 <li class="small">SIIT Bangkradi Campus Canteen Unit #2</li>
                 <li class="small">Open hours: 10:00 - 17:00</li>
-                <li class="small">Telephone number: (+66) 081-2345678</li>
+                <li class="small">Telephone number: (+66) 0812345678</li>
             </ul>
         </div>
 
@@ -81,7 +81,7 @@
                 <div class="card rounded-25 mb-4">
                     <a href="food_item.php?s_id=1&f_id=1" class="text-decoration-none text-dark">
                         <div class="card-img-top">
-                            <img src="img/noodle.jpg" class="h-25" alt="...">
+                            <img src="img/noodle.jpg" style="width:100%; height:125px; object-fit:cover;" class="img-fluid" alt="...">
                         </div>
                         <div class="card-body">
                             <h5 class="card-title fs-5">Pork Boat Noodle</h5>

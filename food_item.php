@@ -2,52 +2,38 @@
 <html lang="en">
 
 <head>
-    <?php session_start(); include("conn_db.php"); include('head.php');?>
+    <?php 
+        session_start();
+        include("conn_db.php");
+        include('head.php');
+        if(!(isset($_GET["s_id"])||isset($_GET["f_id"]))){
+            header("location: restricted.php");
+            exit(1);
+        }
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/menu.css" rel="stylesheet">
     <script type="text/javascript" src="js/input_number.js"></script>
+    <script type="text/javascript">
+        function changeshopcf(){
+            return window.confirm("Do you want to change the shop?\nDon't worry we will do it for you automatically.");
+        }
+    </script>
     <title>Food Item | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
-        <div class="container-fluid mx-4">
-            <a href="index.php">
-                <img src="img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
-            </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link px-3 text-dark" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="shop_list.php" class="nav-link px-3 text-dark">Shop List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="cust_order_history.php" class="nav-link px-3 text-dark">Order History</a>
-                    </li>
-                </ul>
-                <div class="d-flex text-end">
-                    <?php if(!isset($_SESSION['username'])){ ?>
-                    <a class="btn btn-outline-secondary me-2" href="cust_regist.php">Sign Up</a>
-                    <a class="btn btn-success" href="cust_login.php">Log In</a>
-                    <?php }else{ ?>
-                    <span class="m-2 me-3"> LOGGED IN! Welcome, <?=$_SESSION['username']?></span>
-                    <a class="btn btn-outline-danger" href="logout.php">Log Out</a>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    <?php 
+        include('nav_header.php');
+        $s_id = $_GET["s_id"];
+        $f_id = $_GET["f_id"];
+        $query = "SELECT * FROM food WHERE s_id = {$s_id} AND f_id = {$f_id} LIMIT 0,1";
+        $result = $mysqli -> query($query);
+        $food_row = $result -> fetch_array();
+    ?>
     <div class="container px-5 py-4" id="shop-body">
         <div class="row my-4">
             <a class="nav nav-item text-decoration-none text-muted mb-2" href="#" onclick="history.back();">
@@ -56,21 +42,33 @@
         </div>
         <div class="row row-cols-1 row-cols-md-2 mb-5">
             <div class="col mb-3 mb-md-0">
-                <img src="img/noodle.jpg" class="img-fluid rounded-25 float-start" alt="...">
+                <img 
+                    <?php
+                        if(is_null($food_row["f_pic"])){echo "src='img/default.png'";}
+                        else{echo "src=\"img/{$food_row['f_pic']}\"";}
+                    ?> 
+                    class="img-fluid rounded-25 float-start" 
+                    alt="<?php echo $food_row["f_name"]?>">
             </div>
             <div class="col text-wrap">
-                <h1 class="fw-light">PORK BOAT NOODLE</h1>
-                <h3 class="fw-light">50 THB</h3>
+                <h1 class="fw-light"><?php echo $food_row["f_name"]?></h1>
+                <h3 class="fw-light"><?php echo $food_row["f_price"]?> THB</h3>
                 <ul class="list-unstyled mb-3 mb-md-0">
                     <li class="my-2">
+                        <?php if($food_row["f_todayavail"]==1){ ?>
                         <span class="badge rounded-pill bg-success">Avaliable</span>
+                        <?php }else{ ?>
                         <span class="badge rounded-pill bg-danger">Unavaliable</span>
+                        <?php }
+                            if($food_row["f_preorderavail"]==1){?>
                         <span class="badge rounded-pill bg-success">Pre-order avaliable</span>
+                        <?php }else{ ?>
                         <span class="badge rounded-pill bg-danger">Pre-order Unavaliable</span>
+                        <?php }?>
                     </li>
                 </ul>
                 <div class="form-amount">
-                    <form class="mt-3" method="POST" action="#">
+                    <form class="mt-3" method="POST" action="add_item.php">
                         <div class="input-group mb-3">
                             <button id="sub_btn" class="btn btn-outline-secondary" type="button" title="subtract amount" onclick="sub_amt('amount')">
                                 <i class="bi bi-dash-lg"></i>
@@ -81,8 +79,8 @@
                                 <i class="bi bi-plus-lg"></i>
                             </button>
                         </div>
-                        <input type="hidden" name="s_id" value="1">
-                        <input type="hidden" name="f_id" value="1">
+                        <input type="hidden" name="s_id" value="<?php echo $s_id?>">
+                        <input type="hidden" name="f_id" value="<?php echo $f_id?>">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="addrequest" name="request" placeholder=" ">
                             <label for="addrequest" class="d-inline-text">Additional Request (Optional)</label>
@@ -90,13 +88,25 @@
                                 Such as no veggie.
                             </div>
                         </div>
-                        <button class="btn btn-success w-100" type="submit" title="add to cart">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-cart-plus" viewBox="0 0 16 16">
+                        <button class="btn btn-success w-100" type="submit" title="add to cart" name="addtocart"
+                        <?php
+                            $cartsearch_query1 = "SELECT COUNT(*) AS cnt FROM cart WHERE c_id = {$_SESSION['cid']}";
+                            $cartsearch_row1 = $mysqli -> query($cartsearch_query1) -> fetch_array();
+                            if($cartsearch_row1["cnt"]>0){
+                                $cartsearch_query2 = $cartsearch_query1." AND s_id = {$s_id}";
+                                $cartsearch_row2 = $mysqli -> query($cartsearch_query2) -> fetch_array();
+                                if($cartsearch_row2["cnt"]==0){?>
+                                    onclick="javascript: return changeshopcf();"<?php 
+                                } 
+                            }
+                        ?>
+                        >
+                            <svg xmlns='http://www.w3.org/2000/svg\\' width='16' height='16' fill='currentColor'
+                                class='bi bi-cart-plus' viewBox='0 0 16 16'>
                                 <path
-                                    d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
+                                    d='M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z' />
                                 <path
-                                    d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                    d='M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z' />
                             </svg> Add to cart
                         </button>
                     </form>
@@ -104,7 +114,7 @@
             </div>
         </div>
     </div>
-
+    <?php $result -> free_result();?>
     </div>
     <footer
         class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-auto bg-secondary text-light">

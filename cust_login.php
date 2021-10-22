@@ -7,20 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="css/login.css" rel="stylesheet">
 
-    <title>LOG IN | EATERIO</title>
+    <title>Log in | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
+    <header class="navbar navbar-light fixed-top bg-light shadow-sm mb-auto">
         <div class="container-fluid mx-4">
             <a href="index.php">
-                <img src="img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
+                <img src="img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
             </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
         </div>
     </header>
 

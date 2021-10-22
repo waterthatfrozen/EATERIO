@@ -8,23 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/login.css" rel="stylesheet">
 
-    <title>REGISTRATION FAILED | EATERIO</title>
+    <title>Failed to Register | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
+    <header class="navbar navbar-light fixed-top bg-light shadow-sm mb-auto">
         <div class="container-fluid mx-4">
             <a href="index.php">
-                <img src="img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
+                <img src="img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
             </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse" id="navbarCollapse">
-                <div class="d-flex text-end"></div>
-            </div>
         </div>
     </header>
     <div class="mt-5"></div>

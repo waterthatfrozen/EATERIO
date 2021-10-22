@@ -55,3 +55,7 @@ body {
 .rounded-25{
   border-radius: 25px;
 }
+
+.restricted{
+  max-width: 500px !important;
+}

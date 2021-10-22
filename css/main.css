@@ -59,3 +59,7 @@ a{
 .rounded-25{
     border-radius: 25px;
 }
+
+.notibar{
+    max-width: 450px;
+}

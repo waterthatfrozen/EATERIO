@@ -10,6 +10,10 @@
             header("location: restricted.php");
             exit(1);
         }
+        if(!isset($_SESSION["cid"])){
+            header("location: cust_login.php");
+            exit(1);
+        }
     ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

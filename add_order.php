@@ -6,7 +6,7 @@
         $payamount = $_POST["payamount"];
         //Check which shop customer selected
         //and validate the selected pick-up time
-        $shop_query = "SELECT s_id,s_openhour,s_closehour,s_status,s_preorderstatus FROM SHOP
+        $shop_query = "SELECT s_id,s_openhour,s_closehour,s_status,s_preorderstatus FROM shop
         WHERE s_id = (SELECT s_id FROM cart WHERE c_id = {$_SESSION['cid']} GROUP BY c_id)";
         $shop_arr = $mysqli -> query($shop_query) -> fetch_array();
         $shop_id = $shop_arr["s_id"];
@@ -58,12 +58,14 @@
             $ord_result = $mysqli -> query($ord_query);
             $crtdlt_query = "DELETE FROM cart WHERE c_id = {$_SESSION['cid']} AND s_id = {$shop_id};\n";
             $crtdlt_result = $mysqli -> query($crtdlt_query);
+            
             if($crtdlt_result){
                 header("location: order_success.php?orh={$orh_id}");
             }else{
                 header("location: order_failed.php?err={$mysqli->errno}");
             }
             exit(1);
+            
         }
         else{
             ?>

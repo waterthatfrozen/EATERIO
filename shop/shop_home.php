@@ -62,7 +62,7 @@
     
     </header>
     
-    <div class="position-relative d-flex overflow-hidden text-center py-3">
+    <div class="position-relative d-flex overflow-hidden text-center py-3 bg-secondary text-white">
         <div class="p-5 mx-auto my-5 border">
         <h1 class="display fw-normal">SHOP OWNER HOME</h1>
         <p class="lead fw-normal">Food shop management system at SIIT Bangkradi Campus <span class="badge rounded-pill bg-warning reg-text text-dark">Under Construction</span></p>

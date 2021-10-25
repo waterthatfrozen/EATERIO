@@ -62,17 +62,9 @@
         $result = $mysqli -> query($query);
 
         if($result){
-            ?>
-            <script>
-                window.location = "cust_regist_success.php";
-            </script>
-            <?php
+            header("location: cust_regist_success.php");
         }else{
-            ?>
-            <script>
-                window.location = "cust_regist_fail.php?err=<?php echo $mysqli -> errno;?>";
-            </script>
-            <?php
+            header("location: cust_regist_fail.php?err={$mysqli -> errno}");
         }
     }
 ?>

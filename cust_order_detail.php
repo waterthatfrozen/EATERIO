@@ -126,6 +126,20 @@
                                     printf("%.2f THB",$gt_arr["gt"]);
                                 ?>
                             </li>
+                            <li class="list-inline-item fw-light small">Pay by 
+                                <?php 
+                                    $py_query = "SELECT p_type FROM payment WHERE p_id = {$orh_arr['p_id']} LIMIT 0,1;";
+                                    $py_arr = $mysqli -> query($py_query) -> fetch_array();
+                                    switch($py_arr["p_type"]){
+                                        case "CRDC": echo "Credit Card"; break;
+                                        case "DBTC": echo "Debit Card"; break;
+                                        case "PMTP": echo "Promptpay QR Code"; break;
+                                        case "TMNY": echo "TrueMoney"; break;
+                                        case "PYPL": echo "Paypal"; break;
+                                        default: echo "Default Payment Channel";
+                                    }
+                                ?>
+                            </li>
                         </ul>
                     </div>
                 </div>

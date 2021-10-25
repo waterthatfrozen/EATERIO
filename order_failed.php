@@ -2,27 +2,25 @@
 <html lang="en">
 
 <head>
-    <?php session_start(); include("conn_db.php"); include('head.php');?>
+    <?php 
+        session_start(); 
+        include("conn_db.php"); 
+        include('head.php');
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/login.css" rel="stylesheet">
 
-    <title>Reset password failed | EATERIO</title>
+    <title>Failed to place an order | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-light fixed-top bg-light shadow-sm mb-auto">
-        <div class="container-fluid mx-4">
-            <a href="index.php">
-                <img src="img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
-            </a>
-        </div>
-    </header>
+    <?php include('nav_header.php')?>
     <div class="mt-5"></div>
     <div class="container form-signin text-center reg-fail mt-auto">
             <i class="mt-4 bi bi-exclamation-circle text-danger h1 display-2"></i>
-            <h3 class="mt-2 mb-3 fw-normal text-bold">Unable to reset your password</h3>
+            <h3 class="mt-2 mb-3 fw-normal text-bold">Unable to place your order</h3>
             <p class="mb-3 fw-normal text-bold">Sorry, we have encountered with the error.<br/>
                 <code>
                     <?php

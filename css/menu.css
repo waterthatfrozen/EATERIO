@@ -19,6 +19,15 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-.form-amount{
+.form-amount {
     max-width: 375px;
+}
+
+/* Cart CSS */
+.image-parent {
+    max-width: 100px;
+}
+
+input[type="datetime-local"]{
+    max-width: 250px;
 }

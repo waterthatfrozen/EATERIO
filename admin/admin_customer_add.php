@@ -2,30 +2,94 @@
 <html lang="en">
 
 <head>
-    <?php session_start(); include("conn_db.php"); include('head.php');?>
+    <?php 
+    session_start(); 
+    include("../conn_db.php"); 
+    include('../head.php');
+    if($_SESSION["utype"]!="ADMIN"){
+        header("location: ../restricted.php");
+        exit(1);
+    }
+    if(isset($_POST["btn_add"])){
+        $pwd = $_POST["pwd"];
+        $cfpwd = $_POST["cfpwd"];
+        if($pwd != $cfpwd){
+            ?>
+        <script>
+            alert('The password is not match.\nPlease enter it again.');
+            history.back();
+        </script>
+        <?php
+            exit(1);
+        }else{
+            $username = $_POST["username"];
+            $firstname = $_POST["firstname"];
+            $lastname = $_POST["lastname"];
+            $gender = $_POST["gender"];
+            $email = $_POST["email"];
+            $type = $_POST["type"];
+            if($gender == "-" || $type == "-"){
+            ?>
+                <script>
+                    alert('You didn\'t select your gender or role yet.\nPlease select again');
+                    history.back();
+                </script>
+            <?php
+                exit(1);
+            }
+            //Check for duplicating username
+            $query = "SELECT c_username FROM customer WHERE c_username = '$username';";
+            $result = $mysqli -> query($query);
+            if($result -> num_rows >= 1){
+                ?>
+                <script>
+                    alert('The username is already taken!');
+                    history.back();
+                </script>
+            <?php
+            }
+            $result -> free_result();
+            //Check for duplicating email
+            $query = "SELECT c_email FROM customer WHERE c_email = '$email';";
+            $result = $mysqli -> query($query);
+            if($result -> num_rows >= 1){
+            ?>
+                <script>
+                    alert('The email is already in use!');
+                    history.back();
+                </script>
+            <?php
+            }
+            $result -> free_result();
+            $query = "INSERT INTO customer (c_username,c_pwd,c_firstname,c_lastname,c_email,c_gender,c_type)
+            VALUES ('$username','$pwd','$firstname','$lastname','$email','$gender','$type');";
+            $result = $mysqli -> query($query);
+            if($result){
+                header("location: admin_customer_list.php?add_cst=1");
+            }else{
+                header("location: admin_customer_list.php?add_cst=0");
+            }
+        }
+        exit(1);
+    }
+
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/login.css" rel="stylesheet">
-
-    <title>Customer Registration | EATERIO</title>
+    <link href="../css/login.css" rel="stylesheet">
+    <title>Add New Customer | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column">
-    <header class="navbar navbar-light fixed-top bg-light shadow-sm mb-auto">
-        <div class="container-fluid mx-4">
-            <a href="index.php">
-            <img src="img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
-            </a>
-        </div>
-    </header>
+    <?php include('nav_header_admin.php');?>
     <div class="container mt-4"></div>
     <div class="container form-signin mt-auto">
         <a class="nav nav-item text-decoration-none text-muted" href="#" onclick="history.back();">
             <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
-        <form method="POST" action="add_cust.php" class="form-floating">
-            <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-person-plus me-2"></i>Sign Up</h2>
+        <form method="POST" action="admin_customer_add.php" class="form-floating">
+            <h2 class="mt-4 mb-3 fw-normal text-bold"><i class="bi bi-person-plus me-2"></i>Add New Customer</h2>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control" id="username" placeholder="Username" name="username"
                     minlength="5" maxlength="45" required>
@@ -41,7 +105,7 @@
                     maxlength="45" name="cfpwd" required>
                 <label for="cfpwd">Confirm Password</label>
                 <div id="passwordHelpBlock" class="form-text smaller-font">
-                    Your password must be at least 8 characters long.
+                    Password must be at least 8 characters long.
                 </div>
             </div>
             <div class="form-floating mb-2">
@@ -64,7 +128,7 @@
                     <option value="F">Female</option>
                     <option value="N">Non-binary</option>
                 </select>
-                <label for="gender">Your Gender</label>
+                <label for="gender"> Gender</label>
             </div>
             <div class="form-floating">
                 <select class="form-select mb-2" id="type" name="type">
@@ -74,18 +138,12 @@
                     <option value="TAS">Teaching Assistant</option>
                     <option value="STF">Faculty Staff</option>
                     <option value="GUE">Visitor</option>
+                    <option value="ADM">Admin</option>
                     <option value="OTH">Other</option>
                 </select>
-                <label for="gender">Your role</label>
+                <label for="gender">Role</label>
             </div>
-            <div class="form-floating">
-                <div class="mb-2 form-check">
-                    <input type="checkbox" class="form-check-input " id="tandc" name="tandc" required>
-                    <label class="form-check-label small" for="tandc">I agree to the terms and conditions and the
-                        privacy policy</label>
-                </div>
-            </div>
-            <button class="w-100 btn btn-success mb-3" type="submit">Sign Up</button>
+            <button class="w-100 btn btn-success mb-3" type="submit" name="btn_add">Add new customer</button>
         </form>
     </div>
     <div class="container mt-4"></div>

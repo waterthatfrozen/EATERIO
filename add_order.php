@@ -6,7 +6,7 @@
         $payamount = $_POST["payamount"];
         //Check which shop customer selected
         //and validate the selected pick-up time
-        $shop_query = "SELECT s_id,s_openhour,s_closehour,s_status,s_preorderstatus FROM SHOP
+        $shop_query = "SELECT s_id,s_openhour,s_closehour,s_status,s_preorderstatus FROM shop
         WHERE s_id = (SELECT s_id FROM cart WHERE c_id = {$_SESSION['cid']} GROUP BY c_id)";
         $shop_arr = $mysqli -> query($shop_query) -> fetch_array();
         $shop_id = $shop_arr["s_id"];

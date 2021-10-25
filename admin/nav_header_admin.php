@@ -19,7 +19,7 @@
                     <a href="admin_customer_list.php" class="nav-link px-2 text-dark">Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-dark">Shop</a>
+                    <a href="admin_shop_list.php" class="nav-link px-2 text-dark">Shop</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link px-2 text-dark">Menu</a>

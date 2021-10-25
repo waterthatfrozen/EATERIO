@@ -1,7 +1,13 @@
 /* CSS for most core pages */
 body {
+    height: 100%;
     padding-top: 4rem;
     margin-bottom: -50px;
+    font-family: 'Poppins', 'Noto Sans Thai',  sans-serif;
+}
+
+a{
+    cursor: pointer;
 }
 
 .b-example-divider {
@@ -46,8 +52,11 @@ body {
     font-weight: 400;
 }
 
+.rounded-10{
+    border-radius: 10px;
+}
+
 .rounded-25{
     border-radius: 25px;
 }
 
-/* bright */

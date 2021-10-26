@@ -43,7 +43,7 @@
                         <a href="#" class="nav-link pe-2 text-dark">Customer Order</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pe-2 text-dark" href="shop_profile.php"> Shop Profile</a>
+                        <a href="#" class="nav-link pe-2 text-dark">Shop Profile</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link pe-2 text-dark">Food Menu</a>
@@ -58,14 +58,9 @@
                 </div>
             </div>
         </div>
-
-    
     </header>
-    
-    <div class="position-relative d-flex overflow-hidden text-center py-3 bg-secondary text-white">
-        <div class="p-5 mx-auto my-5 border">
-        <h1 class="display fw-normal">SHOP OWNER HOME</h1>
-        <p class="lead fw-normal">Food shop management system at SIIT Bangkradi Campus <span class="badge rounded-pill bg-warning reg-text text-dark">Under Construction</span></p>
+    <div class="position-relative d-flex overflow-hidden text-center py-3">
+        <div class="p-lg-2 mx-auto my-5">
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -89,10 +84,25 @@
                 </div>
             </div>
 
+    <div class="rounded-25 mb-4" id="shop-img" style="
+            background: url('../img/noodle.jpg') center; height: 200px;
+            background-size: cover; background-repeat: no-repeat;
+            background-position: center;">
+    </div>
 
 
 
-
+            <h1 class="display fw-normal">SHOP OWNER HOME</h1>
+            <p class="lead fw-normal">Food shop management system at SIIT Bangkradi Campus <span class="badge rounded-pill bg-warning reg-text text-dark">Under Construction</span></p>
+            <div name="search-box" class="d-flex justify-content-center">
+            <form class="fw-normal w-75" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search-q" placeholder="What food do you want to eat today?">
+                    <button class="btn btn-secondary" type="submit" id="search-bt"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+            </div>
+            <span class="smaller-font text-muted">Food photo created by jcomp - www.freepik.com</span>
         </div>
     </div>
 

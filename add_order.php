@@ -58,12 +58,14 @@
             $ord_result = $mysqli -> query($ord_query);
             $crtdlt_query = "DELETE FROM cart WHERE c_id = {$_SESSION['cid']} AND s_id = {$shop_id};\n";
             $crtdlt_result = $mysqli -> query($crtdlt_query);
+            
             if($crtdlt_result){
                 header("location: order_success.php?orh={$orh_id}");
             }else{
                 header("location: order_failed.php?err={$mysqli->errno}");
             }
             exit(1);
+            
         }
         else{
             ?>

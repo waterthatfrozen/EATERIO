@@ -60,5 +60,8 @@ a{
     border-radius: 25px;
 }
 
+.notibar{
+    max-width: 450px;
+}
 
 /* bright */

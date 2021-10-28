@@ -18,17 +18,6 @@
         <div class="p-lg-2 mx-auto my-5">
             <h1 class="display-5 fw-normal">Welcome to EATERIO</h1>
             <p class="lead fw-normal">Food ordering system of SIIT Bangkradi Campus Canteen</p>
-            <div name="search-box" class="d-flex justify-content-center">
-                <!-- SEARCH FUNCTION WILL DO LATER -->
-                <form class="fw-normal w-75" method="GET" action="#">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search-q"
-                            placeholder="What food do you want to eat today?">
-                        <button class="btn btn-secondary" type="submit" id="search-bt"><i
-                                class="bi bi-search"></i></button>
-                    </div>
-                </form>
-            </div>
             <span class="xsmall-font text-muted">Food photo created by jcomp - www.freepik.com</span>
         </div>
     </div>

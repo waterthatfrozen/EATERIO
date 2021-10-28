@@ -168,10 +168,18 @@
                                 $min_date = $tomorrow_date; $max_date = $tomorrow_date;
                                 $min_time = $shop_open; $max_time = $shop_close;
                             }else{
-                                $min_date = $now_date; $max_date = $tomorrow_date;
-                                if($shop_opening){ $min_time = $now_time; }
-                                else{ $min_time = $shop_open; }
+                                $max_date = $tomorrow_date;
                                 $max_time = $shop_close;
+                                if($now_time<$shop_open){ 
+                                    $min_date = $now_date; 
+                                    $min_time = $shop_open; 
+                                }else if($now_time>$shop_close){
+                                    $min_date = $tomorrow_date; 
+                                    $min_time = $shop_open;
+                                }else{
+                                    $min_date = $now_date;
+                                    $min_time = $now_time;
+                                }
                             }
                         }
 
@@ -260,7 +268,13 @@
                                         $gt_query = "SELECT SUM(ct.ct_amount*f.f_price) AS grandtotal FROM cart ct INNER JOIN food f 
                                         ON ct.f_id = f.f_id WHERE ct.c_id = {$_SESSION['cid']} GROUP BY ct.c_id";
                                         $gt_arr = $mysqli -> query($gt_query) -> fetch_array();
-                                        printf("%.2f THB",$gt_arr["grandtotal"]);
+                                        $order_cost = $gt_arr["grandtotal"];
+                                        printf("%.2f THB",$order_cost);
+                                        if($order_cost<20){
+                                            $min_cost = false;  $no_order=true;
+                                        }else{
+                                            $min_cost = true;
+                                        }
                                     ?>
                                 </li>
                             </ul>
@@ -294,10 +308,12 @@
                                     value="<?php echo $min_datetime?>"
                                     <?php if($no_order){echo "disabled";}?>
                                 >
-                                <input type="hidden" name="payamount" value="<?php echo $gt_arr["grandtotal"];?>">
+                                <input type="hidden" name="payamount" value="<?php echo $order_cost*100;?>">
                                 <div id="passwordHelpBlock" class="form-text smaller-font pt-2">
+                                    <!-- SUBJECTED TO CHANGE LATER -->
                                     <ul class="list-unstyled">
                                         <?php 
+                                            $shop_timerange = $shop_open." to ".$shop_close;
                                             if($disable_shop || ($disable_preorder && !$shop_opening)){
                                                 //Case 1: Shop Closed OR (Disabled Pre-order and already close for the day)
                                         ?>
@@ -306,8 +322,8 @@
                                                 if($disable_today){
                                                 //Case 2: Shop close today but accept pre-order
                                             ?>
-                                        <li class="list-item text-danger fw-bold">This shop is already close for today.</li>
-                                        <li class="list-item">But, you can pick-up order tomorrow from <?php echo $shop_open." to ".$shop_close;?></li>
+                                        <li class="list-item text-danger fw-bold">This shop is not accepting order for today.</li>
+                                        <li class="list-item">But, you can pick-up order tomorrow from <?php echo $shop_timerange;?></li>
                                         <?php } else if($disable_preorder){
                                                 //Case 3: Shop open today but NOT accepting pre-order
                                         ?>
@@ -319,13 +335,15 @@
                                                     //Case 4.1: Shop window is open    
                                         ?>
                                         <li class="list-item">You can order from this shop until<?php echo $shop_close?></li>
-                                        <li class="list-item">Also, you can pick-up order tomorrow from <?php echo $shop_open." to ".$shop_close;?></li>
-                                        <?php       }else{ 
-                                                    //Case 4.2: Shop window is close ?>
-                                        <li class="list-item text-danger fw-bold">This shop is already closed for today.
-                                        </li>
-                                        <li class="list-item">But, you can pick-up order tomorrow from <?php echo $shop_open." to ".$shop_close;?></li>
-                                        <?php       }
+                                        <li class="list-item">Also, you can pick-up order tomorrow from <?php echo $shop_timerange;?></li>
+                                        <?php       }else if($now_time<$shop_open){ 
+                                                    //Case 4.2: Shop window is not open yet ?>
+                                        <li class="list-item">This shop will open today from <?php echo $shop_timerange;?>.</li>
+                                        <li class="list-item">You can also pick-up order tomorrow from <?php echo $shop_timerange;?></li>
+                                        <?php       }else{ //Case 4.2: Shop window is already close for today ?>
+                                        <li class="list-item text-danger fw-bold">This shop is already closed for today.</li>
+                                        <li class="list-item">But, you can pick-up order tomorrow from <?php echo $shop_timerange;?></li>
+                                        <?php }
                                                 }
                                             } 
                                         ?>
@@ -334,8 +352,30 @@
                             </div>
                         </div>
                         <div class="col">
-                            <button type="submit" class="w-100 btn btn-primary" name="place_order" id="place_order"
-                                <?php if($no_order){echo "disabled";}?>>Proceed with payment</button>
+                            <?php if($no_order){ ?>
+                            <button type="submit" class="w-100 btn btn-danger disabled" name="place_order" id="place_order"
+                                disabled>
+                                <?php
+                                    if(!$min_cost){
+                                        echo "Your order is less than minimum amount.";
+                                    }else{
+                                        echo "Cannot proceed with payment";
+                                    }
+                                ?>
+                            </button>
+                            <?php }else{ ?>
+                            <script type="text/javascript" src="https://cdn.omise.co/omise.js"
+                                data-key="pkey_test_5pj8zasgcvaasrujrrs"
+                                data-image="https://github.com/waterthatfrozen/EATERIO/blob/main/img/ICON_F.png?raw=true"
+                                data-frame-label="EATERIO | SIIT BKD"
+                                data-button-label="Proceed with payment"
+                                data-submit-label="Submit"
+                                data-locale="en"
+                                data-location="no"
+                                data-amount="<?php echo $order_cost*100;?>"
+                                data-currency="thb">
+                            </script>
+                            <?php } ?>
                         </div>
                     </form>
                 </div>
@@ -369,4 +409,9 @@
     </footer>
 </body>
 
+<!-- Apply class to omise payment button -->
+<script type="text/javascript">
+    var pay_btn = document.getElementsByClassName("omise-checkout-button");
+    pay_btn[0].classList.add("w-100","btn","btn-primary");
+</script>
 </html>

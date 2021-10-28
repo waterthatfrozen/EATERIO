@@ -68,7 +68,7 @@
                         <li class="mb-2">&nbsp;</li>
                         <li>Placed on <?php echo $od_placedate;?></li>
                         <?php if($orh_arr["orh_orderstatus"]!="FNSH"){ ?>
-                        <li>Pick-up on <?php echo $od_pickupdate;?></li>
+                        <li>Will be pick-up on <?php echo $od_pickupdate;?></li>
                         <?php }else{
                             $od_finishtime = (new Datetime($orh_arr["orh_finishedtime"])) -> format("F j, Y H:i");
                         ?>
@@ -126,18 +126,20 @@
                                     printf("%.2f THB",$gt_arr["gt"]);
                                 ?>
                             </li>
-                            <li class="list-inline-item fw-light small">Pay by 
+                            <li class="list-item fw-light small">Pay by 
                                 <?php 
-                                    $py_query = "SELECT p_type FROM payment WHERE p_id = {$orh_arr['p_id']} LIMIT 0,1;";
+                                    $py_query = "SELECT p_type,p_detail FROM payment WHERE p_id = {$orh_arr['p_id']} LIMIT 0,1;";
                                     $py_arr = $mysqli -> query($py_query) -> fetch_array();
                                     switch($py_arr["p_type"]){
                                         case "CRDC": echo "Credit Card"; break;
                                         case "DBTC": echo "Debit Card"; break;
+                                        case "PPDC": echo "Prepaid Card"; break;
                                         case "PMTP": echo "Promptpay QR Code"; break;
                                         case "TMNY": echo "TrueMoney"; break;
                                         case "PYPL": echo "Paypal"; break;
                                         default: echo "Default Payment Channel";
                                     }
+                                    echo " ".$py_arr["p_detail"];
                                 ?>
                             </li>
                         </ul>

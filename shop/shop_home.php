@@ -46,7 +46,7 @@
                         <a href="#" class="nav-link pe-2 text-dark">Food Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Revenue Report</a>
+                        <a href="shop_revenuereport.php" class="nav-link pe-2 text-dark">Revenue Report</a>
                     </li>
                 </ul>
                 <div class="d-flex navbar text-end">

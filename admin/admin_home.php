@@ -70,7 +70,7 @@
 
             <!-- GRID OF SHOP -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
+                <a href="admin_shop_list.php" class="text-decoration-none text-dark">
                     <div class="card rounded-5 border-success p-2">
                         <div class="card-body">
                             <h4 class="card-title">
@@ -91,7 +91,7 @@
                                 food shop(s) in the system
                             </p>
                             <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Food Shop List</a>
+                                <a href="admin_shop_list.php" class="btn btn-sm btn-outline-dark">Go to Food Shop List</a>
                             </div>
                         </div>
                     </div>

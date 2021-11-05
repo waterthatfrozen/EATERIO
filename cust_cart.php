@@ -334,7 +334,7 @@
                                                     if($shop_opening){
                                                     //Case 4.1: Shop window is open    
                                         ?>
-                                        <li class="list-item">You can order from this shop until<?php echo $shop_close?></li>
+                                        <li class="list-item">You can order from this shop until <?php echo $shop_close?></li>
                                         <li class="list-item">Also, you can pick-up order tomorrow from <?php echo $shop_timerange;?></li>
                                         <?php       }else if($now_time<$shop_open){ 
                                                     //Case 4.2: Shop window is not open yet ?>

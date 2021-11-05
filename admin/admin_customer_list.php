@@ -204,6 +204,7 @@
             </div>
         </div>
         <?php } else{ ?>
+        <div class="table-responsive">
         <table class="table rounded-5 table-light table-striped table-hover align-middle caption-top mb-5">
             <caption><?php echo $search_numrow;?> customer(s) <?php if(isset($_GET["search"])){?><br /><a
                     href="admin_customer_list.php" class="text-decoration-none text-danger">Clear Search
@@ -251,6 +252,7 @@
                 <?php } ?>
             </tbody>
         </table>
+        </div>
         <?php }
             $search_result -> free_result();
         ?>

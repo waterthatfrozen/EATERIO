@@ -27,7 +27,7 @@
     <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
         <div class="container-fluid mx-4">
             <a href="index.php">
-                <img src="../img/logo-with-text.png" width="125" class="me-2" alt="EATERIO Logo">
+                <img src="../img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
             </a>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
@@ -49,7 +49,7 @@
                         <a href="#" class="nav-link pe-2 text-dark">Food Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Revenue Report</a>
+                        <a href="shop_revenuereport.php" class="nav-link pe-2 text-dark">Revenue Report</a>
                     </li>
                 </ul>
                 <div class="d-flex navbar text-end">

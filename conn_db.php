@@ -5,4 +5,6 @@
         echo "Failed to connect to database ". $mysqli->connect_error;
         exit();
     }
+
+    define('SITE_ROOT',realpath(dirname(__FILE__)));
 ?>

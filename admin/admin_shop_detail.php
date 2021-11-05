@@ -109,9 +109,10 @@
         <!-- GRID MENU SELECTION -->
         <div class="container">
         <h3 class="border-top pt-3 mt-2">Menu</h3>
-            <form class="form-floating mb-3" method="GET" action="admin_shop_list.php">
+            <form class="form-floating mb-3" method="GET" action="admin_shop_detail.php">
                 <div class="row g-2">
                     <div class="col">
+                        <input type="hidden" name="s_id" value="<?php echo $s_id;?>">
                         <input type="text" class="form-control" id="foodname" name="fdn" placeholder="Food name"
                             <?php if(isset($_GET["search"])){?>value="<?php echo $_GET["fdn"];?>" <?php } ?>>
                     </div>
@@ -126,13 +127,18 @@
         </div>
         <?php
             $result -> free_result();
-            $query = "SELECT * FROM food WHERE s_id = {$s_id} ORDER BY f_price DESC;";
+            if(isset($_GET["search"])){
+                $query = "SELECT * FROM food WHERE s_id = {$s_id} AND f_name LIKE '%{$_GET['fdn']}%' ORDER BY f_price DESC;";
+            }else{
+                $query = "SELECT * FROM food WHERE s_id = {$s_id} ORDER BY f_price DESC;";
+            }
             $result = $mysqli -> query($query);
             $numrow = $result -> num_rows;
             if($numrow > 0){
         ?>
         <div class="container align-items-stretch">
             <!-- GRID EACH MENU -->
+            <div class="table-responsive">
             <table class="table rounded-5 table-light table-striped table-hover align-middle caption-top mb-3">
                 <caption><?php echo $numrow;?> item(s) <?php if(isset($_GET["search"])){?><br /><a
                         href="admin_shop_detail.php?s_id=<?php echo $s_id?>" class="text-decoration-none text-danger">Clear Search
@@ -181,6 +187,7 @@
                 </tbody>
             </table>
         </div>
+        </div>
         <?php }else{ ?>
         <div class="row">
             <div class="col m-2 p-2 bg-danger text-white rounded text-start">
@@ -190,13 +197,14 @@
                     <path
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                 </svg><span class="ms-2 mt-2">No menu found in this shop</span>
+                <a href="admin_shop_detail.php?s_id=<?php echo $s_id;?>" class="text-white">Clear Search Result</a>
             </div>
         </div>
         <!-- END GRID SHOP SELECTION -->
         <?php } ?>
     </div>
     <footer
-        class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-2 bg-secondary text-light">
+        class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-auto bg-secondary text-light">
         <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada C.
                 Thanakit L.</span></span>
         <ul class="nav justify-content-end list-unstyled d-flex">

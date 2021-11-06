@@ -22,7 +22,7 @@
                     <a href="admin_shop_list.php" class="nav-link px-2 text-dark">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-dark">Menu</a>
+                    <a href="admin_food_list.php" class="nav-link px-2 text-dark">Menu</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link px-2 text-dark">Order</a>

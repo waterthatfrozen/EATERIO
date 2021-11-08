@@ -101,7 +101,7 @@
 
             <!-- GRID OF FOOD -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
+                <a href="admin_food_list.php" class="text-decoration-none text-dark">
                     <div class="card rounded-5 border-primary p-2">
                         <div class="card-body">
                             <h4 class="card-title">
@@ -124,7 +124,7 @@
                                 menu(s) in the system
                             </p>
                             <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
+                                <a href="admin_food_list.php" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
 
             <!-- GRID OF ORDER -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
+                <a href="admin_order_list.php" class="text-decoration-none text-dark">
                     <div class="card rounded-5 border-warning p-2">
                         <div class="card-body">
                             <h4 class="card-title">
@@ -157,7 +157,7 @@
                                 order(s) in the system
                             </p>
                             <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Order List</a>
+                                <a href="admin_order_list.php" class="btn btn-sm btn-outline-dark">Go to Order List</a>
                             </div>
                         </div>
                     </div>

@@ -34,40 +34,6 @@
         <a class="nav nav-item text-decoration-none text-muted mb-2" href="#" onclick="history.back();">
             <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
-        <?php
-            if(isset($_GET["up_pwd"])){
-                if($_GET["up_pwd"]==1){
-                    ?>
-            <!-- START SUCCESSFULLY UPDATE PASSWORD -->
-            <div class="row row-cols-1 notibar">
-                <div class="col mt-2 ms-2 p-2 bg-success text-white rounded text-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-check-circle ms-2" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                    </svg>
-                    <span class="ms-2 mt-2">Successfully updated shop password.</span>
-                </div>
-            </div>
-            <!-- END SUCCESSFULLY UPDATE PASSWORD -->
-            <?php }else{ ?>
-            <!-- START FAILED UPDATE PASSWORD -->
-            <div class="row row-cols-1 notibar">
-                <div class="col mt-2 ms-2 p-2 bg-danger text-white rounded text-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-x-circle ms-2" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                    </svg><span class="ms-2 mt-2">Failed to update shop password.</span>
-                </div>
-            </div>
-            <!-- END FAILED UPDATE PASSWORD -->
-            <?php }
-                }
-            ?>
-
         <div class="container row row-cols-6 row-cols-md-12 g-5 pt-4 mb-4" id="shop-header">
             <div class="rounded-25 col-6 col-md-4" id="shop-img" style="
                     background: url(
@@ -143,22 +109,77 @@
         <!-- GRID MENU SELECTION -->
         <div class="container">
         <h3 class="border-top pt-3 my-2">
-            <a class="text-decoration-none link-success" href="admin_shop_detail.php?s_id=<?php echo $s_id?>">Menus</a>
+            <a class="text-decoration-none link-secondary" href="admin_shop_detail.php?s_id=<?php echo $s_id?>">Menus</a>
             <span class="text-secondary">/</span> 
-            <a class="nav-item text-decoration-none link-secondary" href="admin_shop_order.php?s_id=<?php echo $s_id?>">Orders</a></span>
+            <a class="nav-item text-decoration-none link-success" href="#">Orders</a></span>
         </h3>
-            <form class="form-floating mb-1 " method="GET" action="admin_shop_detail.php">
+            <form class="form-floating mb-3" method="GET" action="admin_shop_order.php">
+                <input type="hidden" name="s_id" value="<?php echo $s_id;?>">
                 <div class="row g-2">
                     <div class="col">
-                        <input type="hidden" name="s_id" value="<?php echo $s_id;?>">
-                        <input type="text" class="form-control" id="foodname" name="fdn" placeholder="Food name"
-                            <?php if(isset($_GET["search"])){?>value="<?php echo $_GET["fdn"];?>" <?php } ?>>
+                        <select class="form-select" id="c_id" name="c_id">
+                            <option selected value="">Customer Name</option>
+                            <?php
+                                $option_query = "SELECT DISTINCT c.c_id, c.c_firstname,c.c_lastname
+                                FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id 
+                                WHERE orh.s_id = {$s_id};";
+                                $option_result = $mysqli -> query($option_query);
+                                $opt_row = $option_result -> num_rows;
+                                if($option_result -> num_rows != 0){
+                                    while($option_arr = $option_result -> fetch_array()){
+                            ?>
+                            <option value="<?php echo $option_arr["c_id"]?>"><?php echo $option_arr["c_firstname"]." ".$option_arr["c_lastname"]?></option>
+                            <?php
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" id="utype" name="ut">
+                            <?php if(isset($_GET["search"])){?>
+                            <option selected value="">Customer Type</option>
+                            <option value="STD" <?php if($_GET["ut"]=="STD"){ echo "selected";}?>>Student</option>
+                            <option value="INS" <?php if($_GET["ut"]=="INS"){ echo "selected";}?>>Professor</option>
+                            <option value="TAS" <?php if($_GET["ut"]=="TAS"){ echo "selected";}?>>Teaching Assistant</option>
+                            <option value="STF" <?php if($_GET["ut"]=="STF"){ echo "selected";}?>>Faculty Staff</option>
+                            <option value="GUE" <?php if($_GET["ut"]=="GUE"){ echo "selected";}?>>Visitor</option>
+                            <option value="ADM" <?php if($_GET["ut"]=="ADM"){ echo "selected";}?>>Admin</option>
+                            <option value="OTH" <?php if($_GET["ut"]=="OTH"){ echo "selected";}?>>Other</option>
+                            <?php }else{ ?>
+                            <option selected value="">Customer Type</option>
+                            <option value="STD">Student</option>
+                            <option value="INS">Professor</option>
+                            <option value="TAS">Teaching Assistant</option>
+                            <option value="STF">Faculty Staff</option>
+                            <option value="GUE">Visitor</option>
+                            <option value="ADM">Admin</option>
+                            <option value="OTH">Other</option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" id="orderstatus" name="os">
+                            <?php if(isset($_GET["search"])){?>
+                            <option selected value="">Order Status</option>
+                            <option value="ACPT" <?php if($_GET["os"]=="ACPT"){ echo "selected";}?>>Order Accepted</option>
+                            <option value="PREP" <?php if($_GET["os"]=="PREP"){ echo "selected";}?>>Order Preparing</option>
+                            <option value="RDPK" <?php if($_GET["os"]=="RDPK"){ echo "selected";}?>>Ready for Pick-Up</option>
+                            <option value="FNSH" <?php if($_GET["os"]=="FNSH"){ echo "selected";}?>>Order Finished</option>
+                            <?php }else{ ?>
+                            <option selected value="">Order Status</option>
+                            <option value="ACPT">Order Accepted</option>
+                            <option value="PREP">Order Preparing</option>
+                            <option value="RDPK">Ready for Pick-Up</option>
+                            <option value="FNSH">Order Finished</option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" name="search" value="1" class="btn btn-success">Search</button>
+                        <button type="submit" name="search" value="1" class="btn btn-success"
+                        <?php if($opt_row==0){echo "disabled";} ?>>Search</button>
                         <button type="reset" class="btn btn-danger"
-                            onclick="javascript: window.location='admin_shop_detail.php?s_id=<?php echo $s_id?>'">Clear</button>
-                        <a href="admin_food_add.php?s_id=<?php echo $s_id?>" class="btn btn-primary">Add new food</a>
+                            onclick="javascript: window.location='admin_shop_order.php?f_id=<?php echo $f_id?>'">Clear</button>
                     </div>
                 </div>
             </form>
@@ -166,9 +187,13 @@
         <?php
             $result -> free_result();
             if(isset($_GET["search"])){
-                $query = "SELECT * FROM food WHERE s_id = {$s_id} AND f_name LIKE '%{$_GET['fdn']}%' ORDER BY f_price DESC;";
+                if($_GET["c_id"]!=''){ $cid_clause = " AND orh.c_id = '{$_GET['c_id']}';"; }else{ $cid_clause = ";";}
+                $query = "SELECT orh.orh_id,orh.orh_refcode,orh.orh_ordertime,c.c_firstname,c.c_lastname,orh.orh_orderstatus,p.p_amount
+                FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id INNER JOIN payment p ON p.p_id = orh.p_id
+                WHERE orh.s_id = {$s_id} AND c.c_type LIKE '%{$_GET['ut']}%' AND orh_orderstatus LIKE '%{$_GET['os']}%'".$cid_clause;
             }else{
-                $query = "SELECT * FROM food WHERE s_id = {$s_id} ORDER BY f_price DESC;";
+                $query = "SELECT orh.orh_id,orh.orh_refcode,orh.orh_ordertime,c.c_firstname,c.c_lastname,orh.orh_orderstatus,p.p_amount
+                FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id INNER JOIN payment p ON p.p_id = orh.p_id WHERE orh.s_id = {$s_id};";
             }
             $result = $mysqli -> query($query);
             $numrow = $result -> num_rows;
@@ -178,15 +203,17 @@
             <!-- GRID EACH MENU -->
             <div class="table-responsive">
             <table class="table rounded-5 table-light table-striped table-hover align-middle caption-top mb-3">
-                <caption><?php echo $numrow;?> item(s) <?php if(isset($_GET["search"])){?><br /><a
-                        href="admin_shop_detail.php?s_id=<?php echo $s_id?>" class="text-decoration-none text-danger">Clear Search
+                <caption><?php echo $numrow;?> order(s) <?php if(isset($_GET["search"])){?><br /><a
+                        href="admin_food_detail.php?f_id=<?php echo $f_id?>" class="text-decoration-none text-danger">Clear Search
                         Result</a><?php } ?></caption>
                 <thead class="bg-light">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Menu Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Avaliability</th>
+                        <th scope="col">Order Ref. Code</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Order Cost</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -194,32 +221,25 @@
                     <?php $i=1; while($row = $result -> fetch_array()){ ?>
                     <tr>
                         <th><?php echo $i++;?></th>
-                        <td><?php echo $row["f_name"];?></td>
-                        <td><?php printf("%.2f THB",$row["f_price"]);?></td>
-                        <td class="text-wrap">
-                            <ul class="list-unstyled mb-3 mb-md-0">
-                                <li class="my-2">
-                                    <?php if($row["f_todayavail"]==1){ ?>
-                                    <span class="badge rounded-pill bg-success">Avaliable</span>
-                                    <?php }else{ ?>
-                                    <span class="badge rounded-pill bg-danger">Unavaliable</span>
-                                    <?php }
-                                        if($row["f_preorderavail"]==1){?>
-                                    <span class="badge rounded-pill bg-success">Pre-order avaliable</span>
-                                    <?php }else{ ?>
-                                    <span class="badge rounded-pill bg-danger">Pre-order Unavaliable</span>
-                                    <?php }?>
-                                </li>
-                            </ul>
-                        </td>
+                        <td><?php echo $row["orh_refcode"];?></td>
                         <td>
-                            <a href="admin_food_detail.php?f_id=<?php echo $row["f_id"]?>"
-                                class="btn btn-sm btn-primary">View</a>
-                            <a href="admin_food_edit.php?f_id=<?php echo $row["f_id"]?>"
-                                class="btn btn-sm btn-outline-success">Edit</a>
-                            <a href="admin_food_delete.php?f_id=<?php echo $row["f_id"]?>"
-                                class="btn btn-sm btn-outline-danger">Delete</a>
+                            <?php if($row["orh_orderstatus"]=="ACPT"){ ?>
+                                <h5><span class="fw-bold badge bg-info text-dark">Accepted</span></h5>
+                            <?php }else if($row["orh_orderstatus"]=="PREP"){ ?>
+                                <h5><span class="fw-bold badge bg-warning text-dark">Preparing</span></h5>
+                            <?php }else if($row["orh_orderstatus"]=="RDPK"){ ?>
+                                <h5><span class="fw-bold badge bg-primary text-white">Ready to pick up</span></h5>
+                            <?php }else if($row["orh_orderstatus"]=="FNSH"){?>
+                                <h5><span class="fw-bold badge bg-success text-white">Completed</span></h5>
+                            <?php } ?>
                         </td>
+                        <td><?php 
+                        $order_time = (new Datetime($row["orh_ordertime"])) -> format("F j, Y H:i");
+                        echo $order_time;
+                        ?></td>
+                        <td><?php echo $row["c_firstname"]." ".$row["c_lastname"];?></td>
+                        <td><?php echo $row["p_amount"]." THB";?></td>
+                        <td><a href="admin_order_detail.php?orh_id=<?php echo $row["orh_id"]?>" class="btn btn-sm btn-primary">View</a></td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -234,8 +254,10 @@
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                     <path
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg><span class="ms-2 mt-2">No menu found in this shop</span>
-                <a href="admin_shop_detail.php?s_id=<?php echo $s_id;?>" class="text-white">Clear Search Result</a>
+                </svg><span class="ms-2 mt-2">No order found with this menu</span>
+                <?php if(isset($_GET["search"])){ ?>
+                <a href="admin_food_detail.php?f_id=<?php echo $f_id;?>" class="text-white">Clear Search Result</a>
+                <?php } ?>
             </div>
         </div>
         <!-- END GRID SHOP SELECTION -->

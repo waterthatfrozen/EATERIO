@@ -25,7 +25,7 @@
                     <a href="admin_food_list.php" class="nav-link px-2 text-dark">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-dark">Order</a>
+                    <a href="admin_order_list.php" class="nav-link px-2 text-dark">Order</a>
                 </li>
             </ul>
             <div class="d-flex">

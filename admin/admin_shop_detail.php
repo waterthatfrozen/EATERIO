@@ -142,8 +142,12 @@
 
         <!-- GRID MENU SELECTION -->
         <div class="container">
-        <h3 class="border-top pt-3 mt-2">Menu</h3>
-            <form class="form-floating mb-3" method="GET" action="admin_shop_detail.php">
+        <h3 class="border-top pt-3 my-2">
+            <a class="text-decoration-none link-success" href="admin_shop_detail.php?s_id=<?php echo $s_id?>">Menus</a>
+            <span class="text-secondary">/</span> 
+            <a class="nav-item text-decoration-none link-secondary" href="admin_shop_order.php?s_id=<?php echo $s_id?>">Orders</a></span>
+        </h3>
+            <form class="form-floating mb-1 " method="GET" action="admin_shop_detail.php">
                 <div class="row g-2">
                     <div class="col">
                         <input type="hidden" name="s_id" value="<?php echo $s_id;?>">

@@ -34,7 +34,7 @@
         include('nav_header.php');
         $s_id = $_GET["s_id"];
         $f_id = $_GET["f_id"];
-        $query = "SELECT * FROM food WHERE s_id = {$s_id} AND f_id = {$f_id} LIMIT 0,1";
+        $query = "SELECT f.*,s.s_status,s.s_preorderstatus FROM food f INNER JOIN shop s ON f.s_id = s.s_id WHERE f.s_id = {$s_id} AND f.f_id = {$f_id} LIMIT 0,1";
         $result = $mysqli -> query($query);
         $food_row = $result -> fetch_array();
     ?>
@@ -59,12 +59,12 @@
                 <h3 class="fw-light"><?php echo $food_row["f_price"]?> THB</h3>
                 <ul class="list-unstyled mb-3 mb-md-0">
                     <li class="my-2">
-                        <?php if($food_row["f_todayavail"]==1){ ?>
+                        <?php if($food_row["f_todayavail"]==1&&$food_row["s_status"]==1){ ?>
                         <span class="badge rounded-pill bg-success">Avaliable</span>
                         <?php }else{ ?>
                         <span class="badge rounded-pill bg-danger">Unavaliable</span>
                         <?php }
-                            if($food_row["f_preorderavail"]==1){?>
+                            if($food_row["f_preorderavail"]==1&&$food_row["s_preorderstatus"]==1){?>
                         <span class="badge rounded-pill bg-success">Pre-order avaliable</span>
                         <?php }else{ ?>
                         <span class="badge rounded-pill bg-danger">Pre-order Unavaliable</span>

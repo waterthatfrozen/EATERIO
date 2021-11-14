@@ -24,7 +24,7 @@
                     <a href="shop_profile.php" class="nav-link px-2 text-dark">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a href="shop_report_select.php" class="nav-link px-2 text-dark">Sales Report</a>
+                    <a href="shop_report_select.php" class="nav-link px-2 text-dark">Revenue Report</a>
                 </li>
             </ul>
             <div class="d-flex">

@@ -24,41 +24,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
-        <div class="container-fluid mx-4">
-            <a href="index.php">
-                <img src="../img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
-            </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link pe-2 text-dark" href="shop_home.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Customer Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Shop Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Food Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="shop_revenuereport.php" class="nav-link pe-2 text-dark">Revenue Report</a>
-                    </li>
-                </ul>
-                <div class="d-flex navbar text-end">
-                    <span class="m-2 me-3">LOGGED IN! Welcome, some shop name <?//$_SESSION['username']?></span>
-                    <a class="btn btn-outline-danger" href="logout.php">Log Out</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php include('nav_header_shop.php');?>
 
     <div class="container p-5" id="shop-profile"> <!--problem -->
         <h2 class="border-bottom pb-2"><i class="bi bi-shop align-top"></i> Shop Profile</h2>

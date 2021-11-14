@@ -22,159 +22,432 @@
 <body class="d-flex flex-column h-100">
     <?php include('nav_header_shop.php'); ?>
 
-    <div class="d-flex text-center text-white promo-banner-bg py-3">
-        <div class="p-lg-2 mx-auto my-3">
-            <h1 class="display-5 fw-normal">ORDER LIST</h1>
-            <p class="lead fw-normal">SIIT Bangkradi Campus Canteen</p>
-            <span class="xsmall-font text-muted">Food photo created by jcomp - www.freepik.com</span>
+    <div class="container px-5 pt-4" id="shop-body">
+        <a class="nav nav-item text-decoration-none text-muted mb-3" href="#" onclick="history.back();">
+            <i class="bi bi-arrow-left-square me-2"></i>Go back
+        </a>
+
+        <?php
+            if(isset($_GET["up_ods"])){
+                if($_GET["up_ods"]==1){
+                    ?>
+            <!-- START SUCCESSFULLY UPDATE ORDER -->
+            <div class="row row-cols-1 notibar">
+                <div class="col ms-2 p-2 bg-success text-white rounded text-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-check-circle ms-2" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                    </svg>
+                    <span class="ms-2 mt-2">Successfully updated order status.</span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_order_list.php">X</a></span>
+                </div>
+            </div>
+            <!-- END SUCCESSFULLY UPDATE ORDER -->
+            <?php }else{ ?>
+            <!-- START FAILED UPDATE ORDER -->
+            <div class="row row-cols-1 notibar">
+                <div class="col ms-2 p-2 bg-danger text-white rounded text-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle ms-2" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span class="ms-2 mt-2">Failed to update order status.</span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_order_list.php">X</a></span>
+                </div>
+            </div>
+            <!-- END FAILED UPDATE ORDER -->
+            <?php }
+                }
+            ?>
+
+        <div class="my-3 text-wrap" id="shop-header">
+            <h2 class="display-6 strong fw-normal">Order History</h2>
+        </div>
+
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active px-4" id="acpt-tab" data-bs-toggle="tab" data-bs-target="#nav-acpt"
+                    type="button" role="tab" aria-controls="nav-acpt"
+                    aria-selected="true">ACPT | Accepted</button>
+                <button class="nav-link px-4" id="prep-tab" data-bs-toggle="tab" data-bs-target="#nav-prep"
+                    type="button" role="tab" aria-controls="nav-prep"
+                    aria-selected="true">PREP | Preparing</button>
+                <button class="nav-link px-4" id="rdpk-tab" data-bs-toggle="tab" data-bs-target="#nav-rdpk"
+                    type="button" role="tab" aria-controls="nav-rdpk"
+                    aria-selected="true">RDPK | Wait for pick-up</button>
+                <button class="nav-link px-4" id="fnsh-tab" data-bs-toggle="tab" data-bs-target="#nav-fnsh"
+                    type="button" role="tab" aria-controls="nav-fnsh" aria-selected="false">FNSH | Finished</button>
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+            <!-- ONGOING ORDER TAB -->
+            <div class="tab-pane fade show active p-3" id="nav-acpt" role="tabpanel" aria-labelledby="acpt-tab">
+                <?php 
+                $acpt_query = "SELECT * FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus = 'ACPT' ORDER BY orh_pickuptime ASC;";
+                $acpt_result = $mysqli -> query($acpt_query);
+                $acpt_num = $acpt_result -> num_rows;
+                if($acpt_num>0){
+                ?>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <!-- START EACH ORDER DETAIL -->
+                    <?php while($og_row = $acpt_result -> fetch_array()){ ?>
+                    <div class="col">
+                        <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>"
+                            class="text-dark text-decoration-none">
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-dark justify-content-between">
+                                    <small class="me-auto d-flex" style="font-weight: 500;">Accepted order</small>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text row row-cols-1">
+                                        <small>
+                                        <div class="col">Order #<?php echo $og_row["orh_refcode"];?></div>
+                                        <div class="col">Name: 
+                                            <?php
+                                            $cust_query = "SELECT c_firstname,c_lastname,c_type FROM customer WHERE c_id = {$og_row['c_id']};";
+                                            $cust_arr = $mysqli -> query($cust_query) -> fetch_array();
+                                            switch($cust_arr["c_type"]){
+                                                case "STD": $cust_type = "Student"; break;
+                                                case "INS": $cust_type = "Professor"; break;
+                                                case "TAS": $cust_type = "Teaching Assistant"; break;
+                                                case "STF": $cust_type = "Faculty Staff"; break;
+                                                case "GUE": $cust_type = "Visitor"; break;
+                                                default: $cust_type = "Other";
+                                            }
+                                            echo "{$cust_arr['c_firstname']} {$cust_arr['c_lastname']} ({$cust_type})";
+                                        ?>
+                                        </div>
+                                        <div class="col mb-2">Pick-up time: 
+                                            <?php 
+                                            $order_time = (new Datetime($og_row["orh_ordertime"])) -> format("F j, Y H:i");
+                                            echo $order_time;
+                                            ?>
+                                        </div>
+                                        <?php 
+                                        $ord_query = "SELECT COUNT(*) AS cnt,SUM(ord_amount*ord_buyprice) AS gt FROM order_detail WHERE orh_id = {$og_row['orh_id']}";
+                                        $ord_arr = $mysqli -> query($ord_query) -> fetch_array();
+                                    ?>
+                                        <div class="col pt-2 mb-2 border-top"><?php echo $ord_arr["cnt"]?> menus | <?php echo $ord_arr["gt"]?> THB</div>
+                                        </small>
+                                        <div class="col">
+                                            <ul class="list-unstyled">
+                                            <?php
+                                                $detail_query = "SELECT f.f_name,ord.ord_amount,ord.ord_note FROM order_detail ord INNER JOIN food f ON ord.f_id = f.f_id WHERE ord.orh_id = {$og_row['orh_id']}";
+                                                $detail_result = $mysqli -> query($detail_query);
+                                                while($detail_row = $detail_result -> fetch_array()){
+                                            ?>
+                                            <li><strong class="h5"><?php echo $detail_row["ord_amount"]?>x</strong> <?php echo $detail_row["f_name"]; if($detail_row["ord_note"]!=""){echo " ({$detail_row['ord_note']})";}?></li>
+                                            <?php } ?>
+                                            </ul>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>" class="btn btn-sm btn-outline-secondary">More Detail</a>
+                                            <a href="shop_order_forward.php?orh_id=<?php echo $og_row["orh_id"]?>&cur_stage=1" class="btn btn-sm btn-success">Mark as Preparing</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <!-- END EACH ORDER DETAIL -->
+                </div>
+                <?php }else{ ?>
+                <!-- IN CASE NO ORDER -->
+                <div class="row row-cols-1">
+                    <div class="col pt-3 px-3 bg-danger text-white rounded text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <p class="ms-2 mt-2">No order found.</p>
+                    </div>
+                </div>
+                <!-- END CASE NO ORDER -->
+                <?php } ?>
+            </div>
+
+            <div class="tab-pane fade p-3" id="nav-prep" role="tabpanel" aria-labelledby="prep-tab">
+                <?php 
+                $acpt_query = "SELECT * FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus = 'PREP' ORDER BY orh_pickuptime ASC;";
+                $acpt_result = $mysqli -> query($acpt_query);
+                $acpt_num = $acpt_result -> num_rows;
+                if($acpt_num>0){
+                ?>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <!-- START EACH ORDER DETAIL -->
+                    <?php while($og_row = $acpt_result -> fetch_array()){ ?>
+                    <div class="col">
+                        <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>"
+                            class="text-dark text-decoration-none">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning justify-content-between">
+                                    <small class="me-auto d-flex" style="font-weight: 500;">Preparing order</small>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text row row-cols-1">
+                                        <small>
+                                        <div class="col">Order #<?php echo $og_row["orh_refcode"];?></div>
+                                        <div class="col">Name: 
+                                            <?php
+                                            $cust_query = "SELECT c_firstname,c_lastname,c_type FROM customer WHERE c_id = {$og_row['c_id']};";
+                                            $cust_arr = $mysqli -> query($cust_query) -> fetch_array();
+                                            switch($cust_arr["c_type"]){
+                                                case "STD": $cust_type = "Student"; break;
+                                                case "INS": $cust_type = "Professor"; break;
+                                                case "TAS": $cust_type = "Teaching Assistant"; break;
+                                                case "STF": $cust_type = "Faculty Staff"; break;
+                                                case "GUE": $cust_type = "Visitor"; break;
+                                                default: $cust_type = "Other";
+                                            }
+                                            echo "{$cust_arr['c_firstname']} {$cust_arr['c_lastname']} ({$cust_type})";
+                                        ?>
+                                        </div>
+                                        <div class="col mb-2">Pick-up time: 
+                                            <?php 
+                                            $order_time = (new Datetime($og_row["orh_ordertime"])) -> format("F j, Y H:i");
+                                            echo $order_time;
+                                            ?>
+                                        </div>
+                                        <?php 
+                                        $ord_query = "SELECT COUNT(*) AS cnt,SUM(ord_amount*ord_buyprice) AS gt FROM order_detail WHERE orh_id = {$og_row['orh_id']}";
+                                        $ord_arr = $mysqli -> query($ord_query) -> fetch_array();
+                                    ?>
+                                        <div class="col pt-2 mb-2 border-top"><?php echo $ord_arr["cnt"]?> menus | <?php echo $ord_arr["gt"]?> THB</div>
+                                        </small>
+                                        <div class="col">
+                                            <ul class="list-unstyled">
+                                            <?php
+                                                $detail_query = "SELECT f.f_name,ord.ord_amount,ord.ord_note FROM order_detail ord INNER JOIN food f ON ord.f_id = f.f_id WHERE ord.orh_id = {$og_row['orh_id']}";
+                                                $detail_result = $mysqli -> query($detail_query);
+                                                while($detail_row = $detail_result -> fetch_array()){
+                                            ?>
+                                            <li><strong class="h5"><?php echo $detail_row["ord_amount"]?>x</strong> <?php echo $detail_row["f_name"]; if($detail_row["ord_note"]!=""){echo " ({$detail_row['ord_note']})";}?></li>
+                                            <?php } ?>
+                                            </ul>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>" class="btn btn-sm btn-outline-secondary">More Detail</a>
+                                            <a href="shop_order_forward.php?orh_id=<?php echo $og_row["orh_id"]?>&cur_stage=2" class="btn btn-sm btn-success">Mark as Ready</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <!-- END EACH ORDER DETAIL -->
+                </div>
+                <?php }else{ ?>
+                <!-- IN CASE NO ORDER -->
+                <div class="row row-cols-1">
+                    <div class="col pt-3 px-3 bg-danger text-white rounded text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <p class="ms-2 mt-2">No order found.</p>
+                    </div>
+                </div>
+                <!-- END CASE NO ORDER -->
+                <?php } ?>
+            </div>
+
+            <div class="tab-pane fade p-3" id="nav-rdpk" role="tabpanel" aria-labelledby="rdpk-tab">
+                <?php 
+                $acpt_query = "SELECT * FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus = 'RDPK' ORDER BY orh_pickuptime ASC;";
+                $acpt_result = $mysqli -> query($acpt_query);
+                $acpt_num = $acpt_result -> num_rows;
+                if($acpt_num>0){
+                ?>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <!-- START EACH ORDER DETAIL -->
+                    <?php while($og_row = $acpt_result -> fetch_array()){ ?>
+                    <div class="col">
+                        <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>"
+                            class="text-dark text-decoration-none">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white justify-content-between">
+                                    <small class="me-auto d-flex" style="font-weight: 500;">Ready to pick up</small>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text row row-cols-1">
+                                        <small>
+                                        <div class="col">Order #<?php echo $og_row["orh_refcode"];?></div>
+                                        <div class="col">Name: 
+                                            <?php
+                                            $cust_query = "SELECT c_firstname,c_lastname,c_type FROM customer WHERE c_id = {$og_row['c_id']};";
+                                            $cust_arr = $mysqli -> query($cust_query) -> fetch_array();
+                                            switch($cust_arr["c_type"]){
+                                                case "STD": $cust_type = "Student"; break;
+                                                case "INS": $cust_type = "Professor"; break;
+                                                case "TAS": $cust_type = "Teaching Assistant"; break;
+                                                case "STF": $cust_type = "Faculty Staff"; break;
+                                                case "GUE": $cust_type = "Visitor"; break;
+                                                default: $cust_type = "Other";
+                                            }
+                                            echo "{$cust_arr['c_firstname']} {$cust_arr['c_lastname']} ({$cust_type})";
+                                        ?>
+                                        </div>
+                                        <div class="col mb-2">Pick-up time: 
+                                            <?php 
+                                            $order_time = (new Datetime($og_row["orh_ordertime"])) -> format("F j, Y H:i");
+                                            echo $order_time;
+                                            ?>
+                                        </div>
+                                        <?php 
+                                        $ord_query = "SELECT COUNT(*) AS cnt,SUM(ord_amount*ord_buyprice) AS gt FROM order_detail WHERE orh_id = {$og_row['orh_id']}";
+                                        $ord_arr = $mysqli -> query($ord_query) -> fetch_array();
+                                    ?>
+                                        <div class="col pt-2 mb-2 border-top"><?php echo $ord_arr["cnt"]?> menus | <?php echo $ord_arr["gt"]?> THB</div>
+                                        </small>
+                                        <div class="col">
+                                            <ul class="list-unstyled">
+                                            <?php
+                                                $detail_query = "SELECT f.f_name,ord.ord_amount,ord.ord_note FROM order_detail ord INNER JOIN food f ON ord.f_id = f.f_id WHERE ord.orh_id = {$og_row['orh_id']}";
+                                                $detail_result = $mysqli -> query($detail_query);
+                                                while($detail_row = $detail_result -> fetch_array()){
+                                            ?>
+                                            <li><strong class="h5"><?php echo $detail_row["ord_amount"]?>x</strong> <?php echo $detail_row["f_name"]; if($detail_row["ord_note"]!=""){echo " ({$detail_row['ord_note']})";}?></li>
+                                            <?php } ?>
+                                            </ul>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>" class="btn btn-sm btn-outline-secondary">More Detail</a>
+                                            <a href="shop_order_forward.php?orh_id=<?php echo $og_row["orh_id"]?>&cur_stage=3" class="btn btn-sm btn-success">Mark as Finish</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <!-- END EACH ORDER DETAIL -->
+                </div>
+                <?php }else{ ?>
+                <!-- IN CASE NO ORDER -->
+                <div class="row row-cols-1">
+                    <div class="col pt-3 px-3 bg-danger text-white rounded text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <p class="ms-2 mt-2">No order found.</p>
+                    </div>
+                </div>
+                <!-- END CASE NO ORDER -->
+                <?php } ?>
+            </div>
+
+            <div class="tab-pane fade p-3" id="nav-fnsh" role="tabpanel" aria-labelledby="fnsh-tab">
+                <?php 
+                $acpt_query = "SELECT * FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus = 'FNSH' ORDER BY orh_finishedtime DESC;";
+                $acpt_result = $mysqli -> query($acpt_query);
+                $acpt_num = $acpt_result -> num_rows;
+                if($acpt_num>0){
+                ?>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <!-- START EACH ORDER DETAIL -->
+                    <?php while($og_row = $acpt_result -> fetch_array()){ ?>
+                    <div class="col">
+                        <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>"
+                            class="text-dark text-decoration-none">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white justify-content-between">
+                                    <small class="me-auto d-flex" style="font-weight: 500;">Order Finished</small>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text row row-cols-1">
+                                        <small>
+                                        <div class="col">Order #<?php echo $og_row["orh_refcode"];?></div>
+                                        <div class="col">Name: 
+                                            <?php
+                                            $cust_query = "SELECT c_firstname,c_lastname,c_type FROM customer WHERE c_id = {$og_row['c_id']};";
+                                            $cust_arr = $mysqli -> query($cust_query) -> fetch_array();
+                                            switch($cust_arr["c_type"]){
+                                                case "STD": $cust_type = "Student"; break;
+                                                case "INS": $cust_type = "Professor"; break;
+                                                case "TAS": $cust_type = "Teaching Assistant"; break;
+                                                case "STF": $cust_type = "Faculty Staff"; break;
+                                                case "GUE": $cust_type = "Visitor"; break;
+                                                default: $cust_type = "Other";
+                                            }
+                                            echo "{$cust_arr['c_firstname']} {$cust_arr['c_lastname']} ({$cust_type})";
+                                        ?>
+                                        </div>
+                                        <div class="col mb-2">Finished on  
+                                            <?php 
+                                            $order_time = (new Datetime($og_row["orh_finishedtime"])) -> format("F j, Y H:i");
+                                            echo $order_time;
+                                            ?>
+                                        </div>
+                                        <?php 
+                                        $ord_query = "SELECT COUNT(*) AS cnt,SUM(ord_amount*ord_buyprice) AS gt FROM order_detail WHERE orh_id = {$og_row['orh_id']}";
+                                        $ord_arr = $mysqli -> query($ord_query) -> fetch_array();
+                                    ?>
+                                        <div class="col pt-2 mb-2 border-top"><?php echo $ord_arr["cnt"]?> menus | <?php echo $ord_arr["gt"]?> THB</div>
+                                        </small>
+                                        <div class="col">
+                                            <ul class="list-unstyled">
+                                            <?php
+                                                $detail_query = "SELECT f.f_name,ord.ord_amount,ord.ord_note FROM order_detail ord INNER JOIN food f ON ord.f_id = f.f_id WHERE ord.orh_id = {$og_row['orh_id']}";
+                                                $detail_result = $mysqli -> query($detail_query);
+                                                while($detail_row = $detail_result -> fetch_array()){
+                                            ?>
+                                            <li><strong class="h5"><?php echo $detail_row["ord_amount"]?>x</strong> <?php echo $detail_row["f_name"]; if($detail_row["ord_note"]!=""){echo " ({$detail_row['ord_note']})";}?></li>
+                                            <?php } ?>
+                                            </ul>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="shop_order_detail.php?orh_id=<?php echo $og_row["orh_id"]?>" class="btn btn-sm btn-outline-secondary">More Detail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <!-- END EACH ORDER DETAIL -->
+                </div>
+                <?php }else{ ?>
+                <!-- IN CASE NO ORDER -->
+                <div class="row row-cols-1">
+                    <div class="col pt-3 px-3 bg-danger text-white rounded text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <p class="ms-2 mt-2">No order found.</p>
+                    </div>
+                </div>
+                <!-- END CASE NO ORDER -->
+                <?php } ?>
+            </div>
+
         </div>
     </div>
 
-    <div class="container p-5" id="shop-dashboard">
-        <h2 class="border-bottom pb-2"><i class="bi bi-graph-up"></i> Shop Dashboard <span
-                class="small fw-light"><?php echo date('F j, Y');?></span></h2>
-
-        <!-- SHOP OWNER GRID DASHBOARD -->
-        <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-3">
-            <!-- TODAY ORDER GRID -->
-            <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="card rounded-5 border-secondary p-2">
-                        <div class="card-body">
-                            <p class="card-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-card-list" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                                </svg>&nbsp;&nbsp;Today Completed Order</p>
-                            <p class="card-text my-2">
-                                <span class="display-5">
-                                    <?php 
-                                    $query = "SELECT COUNT(*) AS cnt_order FROM order_header WHERE s_id = {$s_id} AND DATE(orh_pickuptime) = CURDATE() AND orh_orderstatus = 'FNSH';";
-                                    $result = $mysqli -> query($query) -> fetch_array();
-                                    echo $result["cnt_order"];
-                                    ?> 
-                                    Orders
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- END TODAY ORDER GRID -->
-            <!-- TODAY REVENUE GRID -->
-            <div class="col">
-                <!-- <a href="#" class="text-decoration-none text-dark"> -->
-                    <div class="card rounded-5 border-secondary p-2">
-                        <div class="card-body">
-                            <p class="card-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-coin" viewBox="0 0 16 16">
-                                    <path
-                                        d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z" />
-                                    <path
-                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path
-                                        d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-                                </svg>&nbsp;&nbsp;Today Revenue</p>
-                            <p class="card-text my-2">
-                                <span class="display-5">
-                                    <?php 
-                                        $query = "SELECT SUM(ord.ord_buyprice) AS revenue FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
-                                        WHERE orh.s_id = {$s_id} AND DATE(orh.orh_pickuptime) = CURDATE() AND orh.orh_orderstatus = 'FNSH';";
-                                        $result = $mysqli -> query($query) -> fetch_array();
-                                        if(!is_null($result["revenue"])){echo $result["revenue"];}else{echo "0.00";}
-                                    ?> 
-                                    THB
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                <!-- </a> -->
-            </div>
-            <!-- END TODAY REVENUE GRID -->
-
-            <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
-            <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="card rounded-5 border p-2">
-                        <div class="card-body">
-                            <h5 class="card-title fw-light">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                    class="bi bi-card-list" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                                </svg>
-                                Remaining Order</h5>
-                            <p class="card-text my-2">
-                                <span class="h6">
-                                <?php 
-                                    $query = "SELECT COUNT(*) AS cnt_remain FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus NOT LIKE 'FNSH';";
-                                    $result = $mysqli -> query($query) -> fetch_array();
-                                    echo $result["cnt_remain"];
-                                ?> 
-                                </span>
-                                orders left to be finished
-                            </p>
-                            <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Order List</a>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- END GRID OF ORDER NEEDED TO BE COMPLETE -->
-
-            <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
-            <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                    <div class="card rounded-5 border p-2">
-                        <div class="card-body">
-                            <h5 class="card-title fw-light">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                    class="bi bi-card-list" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                                </svg>
-                                Food Menu</h5>
-                            <p class="card-text my-2">
-                                <span class="h6">
-                                <?php
-                                    $query = "SELECT COUNT(*) AS cnt_menu FROM food f INNER JOIN shop s ON f.s_id = s.s_id 
-                                    WHERE (s.s_status = 1 AND (CURTIME() BETWEEN s.s_openhour AND s.s_closehour) AND f.f_todayavail = 1) OR (s.s_preorderstatus = 1 AND f.f_preorderavail = 1) AND f.s_id = {$s_id};";
-                                    $result = $mysqli -> query($query) -> fetch_array();
-                                    echo $result["cnt_menu"];
-                                ?> 
-                                </span>
-                                Menus available to order
-                            </p>
-                            <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- END GRID OF ORDER NEEDED TO BE COMPLETE -->
-            </div>
-            <!-- END ADMIN GRID DASHBOARD -->
-        </div>
-        <footer
-            class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-2 bg-secondary text-light">
-            <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada
-                    C.
-                    Thanakit L.</span></span>
-            <ul class="nav justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-light" target="_blank"
-                        href="https://github.com/waterthatfrozen/EATERIO"><i class="bi bi-github"></i></a></li>
-            </ul>
-        </footer>
+    <footer
+        class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-auto bg-secondary text-light">
+        <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada C.
+                Thanakit L.</span></span>
+        <ul class="nav justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-light" target="_blank" href="https://github.com/waterthatfrozen/EATERIO"><i
+                        class="bi bi-github"></i></a></li>
+        </ul>
+    </footer>
 </body>
 
 </html>

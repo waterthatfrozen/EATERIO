@@ -43,12 +43,6 @@
                 <label for="floatingPassword">Password</label>
             </div>
             <button class="w-100 btn btn-success mb-3" type="submit">Log In</button>
-            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="#">
-                <i class="bi bi-key me-2"></i>Forgot your password?
-            </a>
-            <a class="nav nav-item text-decoration-none text-muted mb-2 small" href="#">
-                <i class="bi bi-person-plus me-2"></i>Create your new account
-            </a>
         </form>
     </div>
 

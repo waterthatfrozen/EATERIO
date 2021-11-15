@@ -16,12 +16,7 @@
         $_SESSION["username"] = $username;
         $_SESSION["shopname"] = $row["s_name"];
         $_SESSION["utype"] = "shopowner";
-        ?>
-        <script>
-            alert("Welcome to EATERIO");
-            window.location = "shop_home.php";
-        </script>
-        <?php
+        header("location: shop_home.php");
     }else{
         ?>
         <script>

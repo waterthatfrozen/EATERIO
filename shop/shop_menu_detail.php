@@ -129,7 +129,7 @@
                         <div class="card-body">
                             <h5 class="card-title">
                                 <?php
-                                    $count_query = "SELECT COUNT(*) AS cnt FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
+                                    $count_query = "SELECT COUNT(DISTINCT orh.c_id) AS cnt FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
                                     WHERE ord.f_id = {$f_id};";
                                     $count_result = $mysqli -> query($count_query) -> fetch_array();
                                     echo $count_result["cnt"];

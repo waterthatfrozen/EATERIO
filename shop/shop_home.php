@@ -93,7 +93,7 @@
 
             <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
+                <a href="shop_order_list.php" class="text-decoration-none text-dark">
                     <div class="card rounded-5 border p-2">
                         <div class="card-body">
                             <h5 class="card-title fw-light">
@@ -116,7 +116,7 @@
                                 orders left to be finished
                             </p>
                             <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Order List</a>
+                                <a href="shop_order_list.php" class="btn btn-sm btn-outline-dark">Go to Order List</a>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
 
             <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
+                <a href="shop_menu_list.php" class="text-decoration-none text-dark">
                     <div class="card rounded-5 border p-2">
                         <div class="card-body">
                             <h5 class="card-title fw-light">
@@ -150,7 +150,7 @@
                                 Menus available to order
                             </p>
                             <div class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
+                                <a href="shop_menu_list.php" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
                             </div>
                         </div>
                     </div>

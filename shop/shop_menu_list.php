@@ -22,7 +22,7 @@
 <body class="d-flex flex-column h-100">
     <?php include('nav_header_shop.php'); ?>
 
-    <div class="container p-2 pb-0" id="shop-body">
+    <div class="container px-5 pt-4" id="shop-body">
         <div class="mt-4 border-bottom">
             <a class="nav nav-item text-decoration-none text-muted mb-2" href="#" onclick="history.back();">
                 <i class="bi bi-arrow-left-square me-2"></i>Go back
@@ -113,9 +113,7 @@
                 </div>
             </form>
         </div>
-    </div>
-
-    <div class="container pt-2" id="cust-table">
+    <div class="pt-2" id="cust-table">
 
         <?php
             if(!isset($_GET["search"])){
@@ -200,6 +198,7 @@
         <?php }
             $search_result -> free_result();
         ?>
+    </div>
     </div>
     <footer
         class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-auto bg-secondary text-light">

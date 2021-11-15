@@ -4,14 +4,9 @@
 <head>
     <?php 
         session_start(); 
-        if(!isset($_SESSION["utype"])||($_SESSION["utype"]!="shopowner")){
-            ?>
-    <script>
-        alert("You have no permission to access this page");
-        window.location = "../index.php";
-    </script>
-    <?php
-            exit();
+        if($_SESSION["utype"]!="shopowner"){
+            header("location: ../restricted.php");
+            exit(1);
         }
         include("../conn_db.php"); 
         include('../head.php');
@@ -27,7 +22,7 @@
 <body class="d-flex flex-column h-100">
     <?php include('nav_header_shop.php');?>
 
-    <div class="container px-5 py-4" id="profile-body">
+    <div class="container px-5 pt-4" id="profile-body">
         <div class="row my-4 pb-2 border-bottom">
             <a class="nav nav-item text-decoration-none text-muted mb-2" href="#" onclick="history.back();">
                 <i class="bi bi-arrow-left-square me-2"></i>Go back
@@ -47,7 +42,8 @@
                             d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
                     </svg>
                     <span class="ms-2 mt-2">Successfully updated the password!</span>
-                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_profile.php">X</a></span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light"
+                            href="shop_profile.php">X</a></span>
                 </div>
             </div>
             <!-- END SUCCESSFULLY UPDATE PASSWORD -->
@@ -61,7 +57,8 @@
                         <path
                             d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg><span class="ms-2 mt-2">Failed to update the password.</span>
-                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_profile.php">X</a></span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light"
+                            href="shop_profile.php">X</a></span>
                 </div>
             </div>
             <!-- END FAILED UPDATE PASSWORD -->
@@ -80,7 +77,8 @@
                             d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
                     </svg>
                     <span class="ms-2 mt-2">Successfully updated shop profile!</span>
-                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_profile.php">X</a></span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light"
+                            href="shop_profile.php">X</a></span>
                 </div>
             </div>
             <!-- END SUCCESSFULLY UPDATE PASSWORD -->
@@ -94,7 +92,8 @@
                         <path
                             d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg><span class="ms-2 mt-2">Failed to update shop profile.</span>
-                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="shop_profile.php">X</a></span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light"
+                            href="shop_profile.php">X</a></span>
                 </div>
             </div>
             <!-- END FAILED UPDATE PASSWORD -->
@@ -156,7 +155,7 @@
                 <dd class="col-sm-9"><?php echo $row["s_location"];?></dd>
                 <dt class="col-sm-3">Shop Opening Hours</dt>
                 <dd class="col-sm-9">
-                <?php 
+                    <?php 
                     $current_time = date('H:i:s');
                     if($current_time >= $row["s_openhour"] && $current_time <= $row["s_closehour"]){
                         ?><span class="badge fs-6 bg-success">Store-front Opening</span> <?php
@@ -189,11 +188,6 @@
         </div>
         <!-- END CUSTOMER INFORMATION -->
     </div>
-    </div>
-    </div>
-    </div>
-
-
 
 
 

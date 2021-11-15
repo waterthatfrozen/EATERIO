@@ -23,7 +23,7 @@
     <?php include('nav_header_shop.php'); ?>
 
     <div class="container px-5 pt-4" id="shop-body">
-        <a class="nav nav-item text-decoration-none text-muted mb-3" href="#" onclick="history.back();">
+        <a class="pt-4 nav nav-item text-decoration-none text-muted mb-3" href="#" onclick="history.back();">
             <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
 
@@ -64,7 +64,7 @@
             ?>
 
         <div class="my-3 text-wrap" id="shop-header">
-            <h2 class="display-6 strong fw-normal">Order History</h2>
+            <h2 class="display-6 fw-light">Customer Order</h2>
         </div>
 
         <nav>

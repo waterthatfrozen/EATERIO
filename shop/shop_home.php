@@ -4,148 +4,166 @@
 <head>
     <?php 
         session_start(); 
-        if(!isset($_SESSION["utype"])||($_SESSION["utype"]!="shopowner")){
-            ?>
-            <script>
-                alert("You have no permission to access this page");
-                window.location = "../index.php";
-            </script>
-            <?php
-            exit();
+        if($_SESSION["utype"]!="shopowner"){
+            header("location: ../restricted.php");
+            exit(1);
         }
         include("../conn_db.php"); 
         include('../head.php');
+        $s_id = $_SESSION["sid"];
     ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/main.css" rel="stylesheet">
-    <title>SHOP HOME | EATERIO</title>
+    <title>Shop Owner Home | EATERIO</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow-sm mb-auto">
-        <div class="container-fluid mx-4">
-            <a href="index.php">
-                <img src="../img/LOGO_BLACK.png" width="125" class="me-2" alt="EATERIO Logo">
-            </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link pe-2 text-dark" href="shop_home.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Customer Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pe-2 text-dark" href="shop_profile.php"> Shop Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-2 text-dark">Food Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="shop_revenuereport.php" class="nav-link pe-2 text-dark">Revenue Report</a>
-                    </li>
-                </ul>
-                <div class="d-flex navbar text-end">
-                    <span class="m-2 me-3">LOGGED IN! Welcome, some shop name <?//$_SESSION['username']?></span>
-                    <a class="btn btn-outline-danger" href="logout.php">Log Out</a>
-                </div>
-            </div>
-        </div>
+    <?php include('nav_header_shop.php'); ?>
 
-    
-    </header>
-    
-    <div class="position-relative d-flex overflow-hidden text-center py-3 bg-secondary text-white">
-        <div class="p-5 mx-auto my-5 border">
-        <h1 class="display fw-normal">SHOP OWNER HOME</h1>
-        <p class="lead fw-normal">Food shop management system at SIIT Bangkradi Campus <span class="badge rounded-pill bg-warning reg-text text-dark">Under Construction</span></p>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h2 class = "display fs-5"> Today Total Order </h2>
-                        <h4 class="display-1">
-                            200 
-                            <!-- <span class="display-5"> orders </span> -->
-                        </h4>
-                    </div>
-                    <div class="col">
-                        <h1 class="display-1">
-                            |
-                        </h1>
-                    </div>
-                    <div class="col">
-                        <h2 class = "display fs-5"> Today Total Revenue </h2>
-                        <h4 class="display-1">
-                            400 
-                        </h4>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
+    <div class="d-flex text-center text-white promo-banner-bg py-3">
+        <div class="p-lg-2 mx-auto my-3">
+            <h1 class="display-5 fw-normal"><?php echo $_SESSION["shopname"]?></h1>
+            <p class="lead fw-normal">SIIT Bangkradi Campus Canteen</p>
+            <span class="xsmall-font text-muted">Food photo created by jcomp - www.freepik.com</span>
         </div>
     </div>
 
-    <div class="container p-5" id="recommended-shop">
-        <h2 class="border-bottom pb-2"><i class="bi bi-shop align-top"></i> Recommended For You</h2>
-        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-3">
-            <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                <div class="card rounded-25">
-                    <img src="../img/noodle.jpg" class="card-img-top rounded-25" alt="...">
-                    <div class="card-body">
-                        <h4 name="shop-name" class="card-title">Noodle Shop</h4>
-                        <h5 class="card-subtitle pb-1"><span class="badge bg-success me-1">Open</span><span
-                                class="badge bg-success">Pre-order avaliable</span></h5>
-                        <p class="card-text">10:00 - 17:00</p>
-                    </div>
-                </div>
-                </a>
-            </div>
+    <div class="container p-5" id="shop-dashboard">
+        <h2 class="border-bottom pb-2"><i class="bi bi-graph-up"></i> Shop Dashboard <span
+                class="small fw-light"><?php echo date('F j, Y');?></span></h2>
 
+        <!-- SHOP OWNER GRID DASHBOARD -->
+        <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-3">
+            <!-- TODAY ORDER GRID -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                <div class="card rounded-25">
-                    <img src="../img/noodle.jpg" class="card-img-top rounded-25" alt="...">
+                <div class="card rounded-5 border-secondary p-2">
                     <div class="card-body">
-                        <h4 name="shop-name" class="card-title">Noodle Shop</h4>
-                        <h5 class="card-subtitle pb-1"><span class="badge bg-success me-1">Open</span><span
-                                class="badge bg-success">Pre-order avaliable</span></h5>
-                        <p class="card-text">10:00 - 17:00</p>
+                        <p class="card-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-card-list" viewBox="0 0 16 16">
+                                <path
+                                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                <path
+                                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                            </svg>&nbsp;&nbsp;Today Completed Order</p>
+                        <p class="card-text my-2">
+                            <span class="display-5">
+                                <?php 
+                                    $query = "SELECT COUNT(*) AS cnt_order FROM order_header WHERE s_id = {$s_id} AND DATE(orh_pickuptime) = CURDATE() AND orh_orderstatus = 'FNSH';";
+                                    $result = $mysqli -> query($query) -> fetch_array();
+                                    echo $result["cnt_order"];
+                                    ?>
+                                Orders
+                            </span>
+                        </p>
                     </div>
                 </div>
-                </a>
             </div>
+            <!-- END TODAY ORDER GRID -->
+            <!-- TODAY REVENUE GRID -->
+            <div class="col">
+                <div class="card rounded-5 border-secondary p-2">
+                    <div class="card-body">
+                        <p class="card-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-coin" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z" />
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                            </svg>&nbsp;&nbsp;Today Revenue</p>
+                        <p class="card-text my-2">
+                            <span class="display-5">
+                                <?php 
+                                        $query = "SELECT SUM(ord.ord_buyprice) AS revenue FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
+                                        WHERE orh.s_id = {$s_id} AND DATE(orh.orh_pickuptime) = CURDATE() AND orh.orh_orderstatus = 'FNSH';";
+                                        $result = $mysqli -> query($query) -> fetch_array();
+                                        if(!is_null($result["revenue"])){echo $result["revenue"];}else{echo "0.00";}
+                                    ?>
+                                THB
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- END TODAY REVENUE GRID -->
 
+            <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
             <div class="col">
-                <a href="#" class="text-decoration-none text-dark">
-                <div class="card rounded-25">
-                    <img src="../img/noodle.jpg" class="card-img-top rounded-25" alt="...">
-                    <div class="card-body">
-                        <h4 name="shop-name" class="card-title">Noodle Shop</h4>
-                        <h5 class="card-subtitle pb-1"><span class="badge bg-success me-1">Open</span><span
-                                class="badge bg-success">Pre-order avaliable</span></h5>
-                        <p class="card-text">10:00 - 17:00</p>
+                <a href="shop_order_list.php" class="text-decoration-none text-dark">
+                    <div class="card rounded-5 border p-2">
+                        <div class="card-body">
+                            <h5 class="card-title fw-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-card-list" viewBox="0 0 16 16">
+                                    <path
+                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                    <path
+                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                </svg>
+                                Remaining Order</h5>
+                            <p class="card-text my-2">
+                                <span class="h6">
+                                    <?php 
+                                    $query = "SELECT COUNT(*) AS cnt_remain FROM order_header WHERE s_id = {$s_id} AND orh_orderstatus NOT LIKE 'FNSH';";
+                                    $result = $mysqli -> query($query) -> fetch_array();
+                                    echo $result["cnt_remain"];
+                                ?>
+                                </span>
+                                orders left to be finished
+                            </p>
+                            <div class="text-end">
+                                <a href="shop_order_list.php" class="btn btn-sm btn-outline-dark">Go to Order List</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 </a>
             </div>
-            
+            <!-- END GRID OF ORDER NEEDED TO BE COMPLETE -->
+
+            <!-- GRID OF ORDER NEEDED TO BE COMPLETE -->
+            <div class="col">
+                <a href="shop_menu_list.php" class="text-decoration-none text-dark">
+                    <div class="card rounded-5 border p-2">
+                        <div class="card-body">
+                            <h5 class="card-title fw-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-card-list" viewBox="0 0 16 16">
+                                    <path
+                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                    <path
+                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                </svg>
+                                Food Menu</h5>
+                            <p class="card-text my-2">
+                                <span class="h6">
+                                    <?php
+                                    $query = "SELECT COUNT(*) AS cnt_menu FROM food f INNER JOIN shop s ON f.s_id = s.s_id 
+                                    WHERE (s.s_status = 1 AND (CURTIME() BETWEEN s.s_openhour AND s.s_closehour) AND f.f_todayavail = 1) OR (s.s_preorderstatus = 1 AND f.f_preorderavail = 1) AND f.s_id = {$s_id};";
+                                    $result = $mysqli -> query($query) -> fetch_array();
+                                    echo $result["cnt_menu"];
+                                ?>
+                                </span>
+                                Menus available to order
+                            </p>
+                            <div class="text-end">
+                                <a href="shop_menu_list.php" class="btn btn-sm btn-outline-dark">Go to Menu List</a>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- END GRID OF ORDER NEEDED TO BE COMPLETE -->
         </div>
+        <!-- END ADMIN GRID DASHBOARD -->
     </div>
     <footer
         class="footer d-flex flex-wrap justify-content-between align-items-center px-5 py-3 mt-2 bg-secondary text-light">
-        <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada C.
+        <span class="smaller-font">&copy; 2021 SeriousEater Group<br /><span class="xsmall-font">Paphana Y. Sirada
+                C.
                 Thanakit L.</span></span>
         <ul class="nav justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-light" target="_blank" href="https://github.com/waterthatfrozen/EATERIO"><i

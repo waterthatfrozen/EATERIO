@@ -23,15 +23,15 @@
             <i class="bi bi-arrow-left-square me-2"></i>Go back
         </a>
         <h3 class="border-bottom pb-2"><i class="bi bi-shop align-top"></i> Avaliable Shop</h3>
-
+        
         <!-- GRID SHOP SELECTION -->
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-3">
 
         <?php
             $query = "SELECT s_id,s_name,s_openhour,s_closehour,s_status,s_preorderstatus,s_pic FROM shop
-            WHERE s_status = 1 OR s_preorderstatus = 1";
+            WHERE (s_preorderstatus = 1) OR (s_preorderstatus = 0 AND (CURTIME() BETWEEN s_openhour AND s_closehour));";
             $result = $mysqli -> query($query);
-
+            if($result -> num_rows > 0){
             while($row = $result -> fetch_array()){
         ?>
             <!-- GRID EACH SHOP -->
@@ -77,6 +77,22 @@
             </div>
             <!-- END GRID EACH SHOP -->
         <?php } 
+        }else{
+            ?>
+            </div>
+            <div class="row row-cols-1">
+                    <div class="col pt-3 px-3 bg-danger text-white rounded text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <p class="ms-2 mt-2">No shop currently avaliable for order!</p>
+                    </div>
+            </div>
+            <?php
+        }
             $result -> free_result();
         ?>
         </div>

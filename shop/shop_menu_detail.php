@@ -155,7 +155,7 @@
                     <div class="card border-secondary">
                         <div class="card-body">
                             <h5 class="card-title"><?php
-                                    $count_query = "SELECT SUM(ord.ord_buyprice) AS prf FROM order_detail ord WHERE ord.f_id = {$f_id};";
+                                    $count_query = "SELECT SUM(ord.ord_buyprice*ord.ord_amount) AS prf FROM order_detail ord WHERE ord.f_id = {$f_id};";
                                     $count_result = $mysqli -> query($count_query) -> fetch_array();
                                     if(is_null($count_result["prf"])){echo "0.00";}else{echo $count_result["prf"];}
                                 ?> THB</h5>
@@ -167,7 +167,7 @@
                     <div class="card border-secondary">
                         <div class="card-body">
                             <h5 class="card-title"><?php
-                                    $rank_query = "SELECT f.f_id,RANK() OVER (ORDER BY SUM(ord.ord_amount) DESC) AS rnk FROM food f 
+                                    $rank_query = "SELECT f.f_id,RANK() OVER (ORDER BY SUM(ord.ord_buyprice*ord.ord_amount) DESC) AS rnk FROM food f 
                                     INNER JOIN order_detail ord ON f.f_id = ord.f_id WHERE f.s_id = {$s_id} GROUP BY f.f_id;";
                                     $rank_result = $mysqli -> query($rank_query);
                                     $exists = 0;

@@ -88,7 +88,8 @@
                                     $query = "SELECT SUM(ord.ord_amount*ord.ord_buyprice) AS rev FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
                                     WHERE orh.s_id = {$s_id} AND orh_orderstatus = 'FNSH' AND (DATE(orh_finishedtime) BETWEEN DATE('{$start_date}') AND DATE('{$end_date}'));";
                                     $result = $mysqli -> query($query) -> fetch_array();
-                                    if(is_null($result["rev"])){echo "0.00 THB"; $grandtotal = "0.00 THB";} else{$grandtotal = "{$result["rev"]} THB"; echo $grandtotal; }
+                                    if(is_null($result["rev"])){$grandtotal = 0;} else{$grandtotal = $result["rev"];}
+                                    printf("%.2f THB",$grandtotal);
                                 ?>
                             </h5>
                             <p class="card-text small">Total revenue</p>
@@ -103,7 +104,8 @@
                                     $query = "SELECT COUNT(*) AS cnt FROM order_header orh 
                                     WHERE orh.s_id = {$s_id} AND orh_orderstatus = 'FNSH' AND (DATE(orh_finishedtime) BETWEEN DATE('{$start_date}') AND DATE('{$end_date}'));";
                                     $result = $mysqli -> query($query) -> fetch_array();
-                                    if(is_null($result["cnt"])){echo "0 Orders";} else{echo $result["cnt"]." Orders";}
+                                    if(is_null($result["cnt"])){$num_order = 0;} else{$num_order = $result["cnt"];}
+                                    printf("%d Orders",$num_order);
                                 ?>
                             </h5>
                             <p class="card-text small">Number of orders</p>
@@ -130,12 +132,8 @@
                         <div class="card-body">
                             <h5 class="card-title">
                                 <?php
-                                    $query = "SELECT AVG(ord.ord_amount*ord.ord_buyprice) AS avg FROM order_header orh INNER JOIN order_detail ord ON orh.orh_id = ord.orh_id
-                                    WHERE orh.s_id = {$s_id} AND orh_orderstatus = 'FNSH' AND (DATE(orh_finishedtime) BETWEEN DATE('{$start_date}') AND DATE('{$end_date}')) GROUP BY orh.orh_id;";
-                                    $result = $mysqli -> query($query);
-                                    $num_rows = $result -> num_rows;
-                                    if($num_rows == 0){echo "0.00 THB";}
-                                    else{printf("%.2f THB",($result->fetch_array())["avg"]);}
+                                    if($num_order == 0){echo "0.00 THB";}
+                                    else{printf("%.2f THB",$grandtotal/$num_order);}
                                 ?>
                             </h5>
                             <p class="card-text small">Averge cost per order</p>
@@ -241,7 +239,7 @@
                         <?php } ?>
                         <tr class="fw-bold table-info">
                             <td colspan="4" class="text-end">Grand Total</td>
-                            <td><?php echo $grandtotal;?></td>
+                            <td><?php printf("%.2f THB",$grandtotal);?></td>
                         </tr>
                     </tbody>
                 </table>

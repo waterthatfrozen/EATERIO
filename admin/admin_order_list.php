@@ -43,6 +43,7 @@
                             d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
                     </svg>
                     <span class="ms-2 mt-2">Successfully updated order status.</span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="admin_order_list.php">X</a></span>
                 </div>
             </div>
             <!-- END SUCCESSFULLY UPDATE ORDER STATUS -->
@@ -56,6 +57,7 @@
                         <path
                             d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg><span class="ms-2 mt-2">Failed to update order status.</span>
+                    <span class="me-2 float-end"><a class="text-decoration-none link-light" href="admin_order_list.php">X</a></span>
                 </div>
             </div>
             <!-- END FAILED UPDATE ORDER STATUS -->
@@ -156,14 +158,14 @@
     <?php
             if(isset($_GET["search"])){
                 if($_GET["c_id"]!=''){ $cid_clause = " AND orh.c_id = '{$_GET['c_id']}' "; }else{ $cid_clause = " ";}
-                if($_GET["s_id"]!=''){ $sid_clause = " AND orh.s_id = '{$_GET['s_id']}';"; }else{ $sid_clause = ";";}
+                if($_GET["s_id"]!=''){ $sid_clause = " AND orh.s_id = '{$_GET['s_id']}' "; }else{ $sid_clause = " ";}
                 $query = "SELECT orh.orh_id,orh.orh_refcode,orh.orh_ordertime,c.c_firstname,c.c_lastname,orh.orh_orderstatus,p.p_amount,s.s_name
                 FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id INNER JOIN payment p ON p.p_id = orh.p_id
                 INNER JOIN shop s ON orh.s_id = s.s_id WHERE c.c_type LIKE '%{$_GET['ut']}%' 
-                AND orh_orderstatus LIKE '%{$_GET['os']}%'".$cid_clause.$sid_clause;
+                AND orh_orderstatus LIKE '%{$_GET['os']}%'".$cid_clause.$sid_clause." ORDER BY orh.orh_ordertime DESC;";
             }else{
                 $query = "SELECT orh.orh_id,orh.orh_refcode,orh.orh_ordertime,c.c_firstname,c.c_lastname,orh.orh_orderstatus,p.p_amount,s.s_name
-                FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id INNER JOIN payment p ON p.p_id = orh.p_id INNER JOIN shop s ON orh.s_id = s.s_id;";
+                FROM order_header orh INNER JOIN customer c ON orh.c_id = c.c_id INNER JOIN payment p ON p.p_id = orh.p_id INNER JOIN shop s ON orh.s_id = s.s_id ORDER BY orh.orh_ordertime DESC;";
             }
             $result = $mysqli -> query($query);
             $numrow = $result -> num_rows;

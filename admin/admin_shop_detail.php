@@ -146,6 +146,8 @@
             <a class="text-decoration-none link-success" href="admin_shop_detail.php?s_id=<?php echo $s_id?>">Menus</a>
             <span class="text-secondary">/</span> 
             <a class="nav-item text-decoration-none link-secondary" href="admin_shop_order.php?s_id=<?php echo $s_id?>">Orders</a></span>
+            <span class="text-secondary">/</span> 
+            <a class="nav-item text-decoration-none link-secondary" href="admin_shop_revenue.php?s_id=<?php echo $s_id?>">Revenue</a></span>
         </h3>
             <form class="form-floating mb-1 " method="GET" action="admin_shop_detail.php">
                 <div class="row g-2">

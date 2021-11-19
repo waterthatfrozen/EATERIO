@@ -1,6 +1,6 @@
 <?php
     // Date range related function
-    //Thank you StackOverflow
+    // Thank you StackOverflow
     function rangeWeek ($datestr) {
         date_default_timezone_set(date_default_timezone_get());
         $dt = strtotime ($datestr);

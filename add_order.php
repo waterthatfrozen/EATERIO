@@ -24,7 +24,7 @@
         //Order accepted.
         //Omise Payment
         require_once dirname(__FILE__).'/omise-php/lib/omise.php';
-        define('OMISE_API_VERSION', '2015-11-17');
+        define('OMISE_API_VERSION', '2019-05-29');
         define('OMISE_PUBLIC_KEY', 'pkey_test_5pj8zasgcvaasrujrrs');
         define('OMISE_SECRET_KEY', 'skey_test_5pj8zasgc2vv1yma57q');
         $charge = OmiseCharge::create(array(

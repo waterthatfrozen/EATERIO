@@ -23,7 +23,7 @@
     ($shop_preorder==1 && $pkt_arr[0]==$tomorrow_date && $pkt_arr[1]>=$shop_open && $pkt_arr[1]<=$shop_close) ){
         //Order accepted.
         //Omise Payment
-        require_once dirname(__FILE__).'/omise-php/lib/omise.php';
+        require_once SITE_ROOT.'/omise-php/lib/omise.php';
         define('OMISE_API_VERSION', '2019-05-29');
         define('OMISE_PUBLIC_KEY', 'pkey_test_5pj8zasgcvaasrujrrs');
         define('OMISE_SECRET_KEY', 'skey_test_5pj8zasgc2vv1yma57q');

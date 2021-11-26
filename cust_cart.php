@@ -370,7 +370,7 @@
                             <?php }else{ ?>
                             <script type="text/javascript" src="https://cdn.omise.co/omise.js"
                                 data-key="pkey_test_5pj8zasgcvaasrujrrs"
-                                data-image="https://github.com/waterthatfrozen/EATERIO/blob/main/img/ICON_F.png?raw=true"
+                                data-image="https://github.com/waterthatfrozen/EATERIO/blob/9852a00d8e47b50cbe428a7f7ec763446ac273b4/img/ICON_F.png"
                                 data-frame-label="EATERIO | SIIT BKD"
                                 data-button-label="Proceed with payment"
                                 data-submit-label="Submit"

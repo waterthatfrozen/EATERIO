@@ -206,7 +206,7 @@
             <div class="table-responsive">
             <table class="table rounded-5 table-light table-striped table-hover align-middle caption-top mb-3">
                 <caption><?php echo $numrow;?> order(s) <?php if(isset($_GET["search"])){?><br /><a
-                        href="admin_food_detail.php?f_id=<?php echo $f_id?>" class="text-decoration-none text-danger">Clear Search
+                        href="admin_shop_order.php?s_id=<?php echo $s_id?>" class="text-decoration-none text-danger">Clear Search
                         Result</a><?php } ?></caption>
                 <thead class="bg-light">
                     <tr>
@@ -258,7 +258,7 @@
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                 </svg><span class="ms-2 mt-2">No order found with this menu</span>
                 <?php if(isset($_GET["search"])){ ?>
-                <a href="admin_food_detail.php?f_id=<?php echo $f_id;?>" class="text-white">Clear Search Result</a>
+                <a href="admin_shop_order.php?s_id=<?php echo $s_id;?>" class="text-white">Clear Search Result</a>
                 <?php } ?>
             </div>
         </div>

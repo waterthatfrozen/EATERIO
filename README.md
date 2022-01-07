@@ -2,12 +2,15 @@
 Database System Project
 
 ## Project Status
-Status: COMPLETED\
+Status: **CLOSED**\
 Completion: **100%**\
-Updated on: November 19th, 2021
+Updated on: January 7th, 2021
 
 ## Project Description
 EATERIO is a canteen food ordering and management system based on case scenario at Sirindhorn International Institute of Technology, Thammasat University, Bangkradi Campus. This system has 2 main group of users, customer and shop owner. Customer can view shop and menu list, add item to the cart, place the order up to 1 day in advance, pay for order, and view their order history. Shop owner can edit their shop information, manage their menus, manage customer orders, and view revenue report. There's also a "admin" mode which can manage the system of customer, shop, menu, and orders.
+
+## Deployment
+Please visit https://eaterio-test.herokuapp.com/index.php
 
 ## Tools of Development
 - HTML 5
@@ -25,6 +28,6 @@ EATERIO is a canteen food ordering and management system based on case scenario 
 - You can register for the customer account and log in. To log in with shop account, press the log in with shop account under login page. Add shop account using the admin mode. Access admin mode by clicking at the first name in the footer at the customer log in page. You can look up 
 
 ## Members
-Paphana Yiwsiw\
-Sirada Chaisawat\
-Thanakit Lerttomolsakul
+Paphana Yiwsiw - @waterthatfrozen\
+Sirada Chaisawat - @qmuip\
+Thanakit Lerttomolsakul - @BrightHiewww
